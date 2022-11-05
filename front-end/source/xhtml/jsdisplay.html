@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>자바스크립트로 출력하기</title>
+    <script>
+      //브라우저 화면에 출력
+      document.write("<p>안녕하세요</p>");
+
+      //대화 상자에 출력
+      //   alert("대화상자에 출력");
+
+      //콘솔에 출력
+      console.log("콘솔에 출력");
+
+      one = 100;
+      function get() {
+        console.log((one = 100));
+        two = 200;
+        let three = 300;
+      }
+      console.log(one);
+      get();
+      console.log(two); // 키워드 없이 이름을 만들어서 함수가 호출된 이후에 어느 곳에서든지 사용이 가능한 global이 된다.
+      console.log(three); // 키워드와 함께 만들어져서 사진의 영역에서만 사용이 가능.
+    </script>
+  </head>
+  <body></body>
+</html>

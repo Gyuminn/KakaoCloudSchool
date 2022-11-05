@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>미디어 쿼리를 이용한 반응형 웹</title>
+    <style>
+      body {
+        background-color: gray;
+      }
+
+      #logo img {
+        width: 100%;
+        margin-top: 150px;
+      }
+
+      /* 화면의 크기가 960px가 될 때까지 적용 */
+      @media screen and (max-width: 960px) {
+        body {
+          background-color: khaki;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="logo"><img src="./images/americano.jpg" /></div>
+  </body>
+</html>
