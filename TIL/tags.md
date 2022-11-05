@@ -96,3 +96,32 @@ select 에는 name을 설정하고 option에는 value를 설정한다.
 ## `button` 태그
 
 butotn은 form 안에 있으면 submit의 기능을 수행
+
+## `div` 태그와 `span` 태그
+
+div
+
+- 블록 요소
+- 기본적으로 좌우에 다른 요소가 배치될 수 없음
+- 영역을 만들 때 자주 사용됨
+
+span
+
+- 인라인 요소
+- 기본적으로 좌우에 다른 요소가 배치될 수 있음
+
+---
+
+## `iframe` 태그
+
+다른 웹 문서를 가지고 와서 표시하는 요소
+
+속성
+
+- width
+- height
+- name
+- seamless
+- src: 표시할 문서의 url
+
+---
