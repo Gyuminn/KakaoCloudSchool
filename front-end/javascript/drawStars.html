@@ -53,18 +53,16 @@
         if (i == 5) {
           let cnt = 0;
           while (cnt < i * 2 + 1) {
+            number %= 10;
             document.write(number);
             number++;
             cnt++;
-            if (number > 9) {
-              number = 0;
-            }
           }
           break;
         }
 
         for (let frontSpace = 0; frontSpace < 5 - i; frontSpace++) {
-          document.write("*");
+          document.write("&nbsp");
         }
 
         document.write(number);
@@ -76,7 +74,7 @@
         }
 
         for (let middleSpace = 0; middleSpace < 2 * i - 1; middleSpace++) {
-          document.write("*");
+          document.write("&nbsp");
         }
 
         document.write(number);
