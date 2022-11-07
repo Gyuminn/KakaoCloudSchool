@@ -8,6 +8,7 @@
   </head>
   <body>
     <script>
+      // 비트 연산자
       console.log(~14); // 1의 보수는 부호는 반대가 되고 절대값 1 차이
       console.log(27 & 14); // 10
       console.log(27 | 14); // 31
@@ -17,6 +18,55 @@
       console.log(14 >>> 2);
       console.log(-14 >> 2); // 음수의 경우는 >>> 과 결과가 다르다.
       console.log(~14 >>> 2);
+
+      // 앞의 식의 결과가 false면 뒤의 식을 확인하지 않음.
+      let x = 10;
+      let result = x > 10 && x++;
+      console.log(x);
+
+      // javascript는 Boolean이 아니어도 && 연산을 할 수 있음.
+      result = true && 10;
+      console.log(result);
+
+      let data1 = [1, 2];
+      let data2 = [3, 4];
+      let data3 = null;
+
+      // data1이 Truthy이기 때문에 data1가 대입된다.
+      result = data1 || data2;
+      console.log(result);
+
+      // data3이 Falthy이기 때문에 data2가 대입된다.
+      result = data3 || data2;
+      console.log(result);
+
+      // 문자열과 다른 데이터를 + 하면 다른 데이터를 문자열로 변환해서 결합을 한다.
+      console.log("결과:" + result);
+
+      let a1 = 20;
+      let a2 = 30;
+      // 맨 앞의 표현식이 ture이면 다음 내용이 남고 그렇지 않으면 마지막 내용이 남는다.
+      let max = a1 > a2 ? a1 : a2;
+      console.log(max);
+
+      // nullish operator
+      let str1 = 0;
+      let str2 = "JavaScript";
+
+      // 0은 falsy 값이기 때문에 str2가 남는다.
+      let answer = str1 || str2;
+      console.log(answer);
+
+      // str1이 null이 아니기 때문에 str1이 남는다.
+      // ?? Falsy를 판단하는 것이 아니고 데이터의 존재여부를 확인
+      answer = str1 ?? str2;
+      console.log(answer);
+
+      let coffee = "아메리카노";
+      console.log(typeof coffee);
+
+      let beverage = ["아메리카노", "카페라떼", "카페모카"];
+      console.log("초코라떼" in beverage);
     </script>
   </body>
 </html>
