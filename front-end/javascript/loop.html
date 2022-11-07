@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loop</title>
+  </head>
+  <body>
+    <script>
+      console.log("Javascript");
+      console.log("Javascript");
+      console.log("Javascript");
+
+      // 스파게티 코드가 제거되어서 유지보수가 편리해진다.
+      for (let i = 0; i < 3; i++) {
+        console.log("Javascript");
+      }
+
+      // 일정한 패턴이 반복되는 반복문
+      // image1.png image11.png image21.png image31.png
+      for (let i = 0; i < 4; i++) {
+        console.log("image" + (10 * i + 1) + ".png");
+      }
+
+      // 초기 식을 while 외부에 작성하고 중간식을 반복 블럭 안에 작성하면
+      // for와 거의 유사한 역할을 하는 형태로 만들 수 있다.
+      let idxForWhile = 0;
+      while (idxForWhile < 4) {
+        console.log("image" + (15 * idxForWhile + 1) + ".png");
+        idxForWhile++;
+      }
+
+      let i = 0;
+      do {
+        console.log("image" + (15 * i + 1) + "png");
+        i++;
+      } while (i < 4);
+
+      // Object 객체 생성 - name과 age라는 속성에 gyumin, 26이라는 값을 저장
+      let obj = { name: "gyumin", age: 26 };
+
+      // Array 생성
+      let arr = [100, 200, 300];
+
+      // obj가 가진 모든 속성을 attr에 대입하고 { } 안의 내용 수행
+      for (let attr in obj) {
+        console.log(attr + ":" + obj[attr]);
+      }
+
+      // 배열의 경우는 인덱스가 순서대로 attr에 대입된다.
+      for (let attr in arr) {
+        console.log(attr + ":" + arr[attr]);
+      }
+    </script>
+  </body>
+</html>
