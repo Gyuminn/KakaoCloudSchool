@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Function</title>
+  </head>
+  <body>
+    <script>
+      let f = () => {
+        for (let i = 0; i < 3; i++) {
+          document.write("Call Function");
+          document.write("<br/>");
+        }
+      };
+
+      f();
+      document.write("Interupt");
+      document.write("<br/>");
+      f();
+    </script>
+  </body>
+</html>
