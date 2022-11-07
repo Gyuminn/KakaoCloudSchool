@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Draw Stars</title>
+  </head>
+  <body>
+    <script>
+      for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 5; j++) {
+          document.write("*");
+        }
+        document.write("<br/>");
+      }
+      document.write("<br/>");
+
+      for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 2 * i + 1; j++) {
+          document.write("*");
+        }
+        document.write("<br/>");
+      }
+      document.write("<br/>");
+
+      for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 5 - i * 1; j++) {
+          document.write("*");
+        }
+        document.write("<br/>");
+      }
+      document.write("<br/>");
+
+      // 나누어서 처리 하는 방법 - 분할 정복의 기초
+      for (let i = 0; i < 5; i++) {
+        if (i < 3) {
+          for (let j = 0; j < i + 1; j++) {
+            document.write("*");
+          }
+        } else {
+          for (let j = 0; j < 5 - i * 1; j++) {
+            document.write("*");
+          }
+        }
+        document.write("<br/>");
+      }
+      document.write("<br/>");
+
+      let number = 0;
+      for (let i = 0; i < 6; i++) {
+        if (i == 5) {
+          let cnt = 0;
+          while (cnt < i * 2 + 1) {
+            document.write(number);
+            number++;
+            cnt++;
+            if (number > 9) {
+              number = 0;
+            }
+          }
+          break;
+        }
+
+        for (let frontSpace = 0; frontSpace < 5 - i; frontSpace++) {
+          document.write("*");
+        }
+
+        document.write(number);
+        number++;
+
+        if (i == 0) {
+          document.write("<br/>");
+          continue;
+        }
+
+        for (let middleSpace = 0; middleSpace < 2 * i - 1; middleSpace++) {
+          document.write("*");
+        }
+
+        document.write(number);
+        number++;
+
+        document.write("<br/>");
+      }
+    </script>
+  </body>
+</html>
