@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Operator</title>
+  </head>
+  <body>
+    <script>
+      console.log(~14); // 1의 보수는 부호는 반대가 되고 절대값 1 차이
+      console.log(27 & 14); // 10
+      console.log(27 | 14); // 31
+      console.log(27 ^ 14); // 21
+      console.log(14 << 2); // 한 번 밀 때마다 2배씩 증가
+      console.log(14 >> 2); // 비트에서의 1은 떨어져 나가기 때문에 소수가 나올 수 없다.
+      console.log(14 >>> 2);
+      console.log(-14 >> 2); // 음수의 경우는 >>> 과 결과가 다르다.
+      console.log(~14 >>> 2);
+    </script>
+  </body>
+</html>
