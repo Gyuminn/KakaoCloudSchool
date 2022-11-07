@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Control Statement</title>
+  </head>
+  <body>
+    <script>
+      /*
+      let score = Number(prompt("점수를 입력하세요"));
+      console.log(score);
+
+      
+      if (score >= 90) {
+        alert("A");
+      } else if (score >= 80) {
+        alert("B");
+      } else {
+        alert("F");
+      }
+      */
+
+      let score = prompt("점수를 입력하세요");
+      switch (true) {
+        case score >= 90:
+          alert("A");
+          break;
+        case score >= 80:
+          alert("B");
+          break;
+        case score >= 70:
+          alert("C");
+          break;
+        case score >= 60:
+          alert("D");
+          break;
+        default:
+          alert("F");
+          break;
+      }
+    </script>
+  </body>
+</html>
