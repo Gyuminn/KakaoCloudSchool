@@ -105,11 +105,18 @@
       HOCResult();
       HOCResult();
 
+      // ECMA 2015에서 매개변수에 기본값을 설정하는 문법이 추가
       const getAreaOfCircle = function (n = 1) {
         // 예전에는 or를 이용해서 기본값 설정
         // const radius = n || 1;
         return Math.PI + n * n;
       };
+
+      let response = confirm("식사를 하셨나요?");
+      console.log(response);
+
+      let request = prompt("이름을 입력하세요", "noname");
+      console.log(request);
     </script>
   </body>
 </html>
