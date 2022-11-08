@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Define Object</title>
+  </head>
+  <body>
+    <script>
+      let person = {
+        name: "gyumin",
+        age: 26,
+        display: function () {
+          return this.name + ":" + this.age;
+        },
+      };
+      // name을 출력
+      console.log(person.name);
+      console.log(person["age"]);
+      // 함수 호출 - display를 호출하면 함수의 내용이 출력됨. 괄호 필요.
+      console.log(person.display());
+
+      // person object의 모든 속성을 순서대로 attr에 문자열 형태로 대입
+      // 따라서 value 혹은 메서드를 가지고 오고 싶다면 문자열이 들어가야 하는
+      // 대괄호 표기법을 이용해야 한다.
+      for (attr in person) {
+        console.log(attr);
+        console.log(person[attr]);
+      }
+
+      // 속성의 존재 여부
+      console.log("name" in person);
+      console.log("phone" in person);
+
+      // 블럭 안에서는 obj를 생략해도 됨.
+      // 현재 파일 내에서 window를 생략해도 window 객체의 요소를 불러오는 것도
+      // 이 문법 때문이다.
+      with (person) {
+        console.log(name);
+      }
+
+      person.space = "whangsimni";
+      console.log(person.space);
+      person.age = 26.5;
+      delete person.space;
+      console.log(person);
+    </script>
+  </body>
+</html>
