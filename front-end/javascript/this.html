@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>this</title>
+  </head>
+  <body>
+    <script>
+      let person = {
+        name: "gyumin",
+        getName: function () {
+          // javascript에서는 메서드 안에서
+          // 자신의 객체에 속한 속성을 호출할 때 반드시
+          // this. 를 붙여야 한다.
+          return this.name;
+        },
+      };
+      console.log(person.getName());
+
+      // name, age, school이라는 상속을 갖는 constructor(생성자)
+      // 매개변수가 없는 생성자를 default constructor라고 한다.
+      let student = function () {
+        // this가 없으면 지역변수가 만들어진다.
+        // this와 함께 만들어야 객체의 속성이 된다.
+        this.name = "이름없음";
+        this.age = "나이없음";
+        this.school = "학교없음";
+      };
+
+      // 생성자를 이용한 인스턴스 생성
+      let kimgyumin = new student();
+      console.log(kimgyumin);
+
+      // 매개변수가 있는 생성자함수
+      // default parameter를 주면 만드는 방법이 훨씬 다양해지므로 지향하자.
+      let artist = function (name = "이름없음", job = "불분명") {
+        this.name = name;
+        this.job = job;
+      };
+
+      let changmo = new artist("changmo", "rapper");
+      let zico = new artist("zico", "rapper");
+      let iu = new artist("iu");
+      console.log(changmo);
+      console.log(zico);
+      console.log(iu);
+    </script>
+  </body>
+</html>
