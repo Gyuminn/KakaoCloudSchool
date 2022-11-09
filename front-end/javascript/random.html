@@ -19,6 +19,25 @@
 
       const foods = ["한식", "양식", "분식", "일식", "중식"];
       console.log(foods[menu]);
+
+      // 과제
+      let str = "CGCCGDKSKDGCCGCCGDKDGCCGDS";
+
+      // 이 문자열에서 GCCG를 찾아서 첫 글자의 위치를 전부 출력하시오.
+      // 앞에서 사용한 데이터는 다시 사용하면 안된다.
+      let answer = [];
+      let cnt = 0;
+      while (cnt < str.length) {
+        const testStr = str.slice(cnt, cnt + 4);
+
+        if (testStr == "GCCG") {
+          answer.push(cnt);
+          cnt += 4;
+          continue;
+        }
+        cnt++;
+      }
+      console.log(answer);
     </script>
   </body>
 </html>
