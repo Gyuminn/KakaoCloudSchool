@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>메뉴를 랜덤하게 출력</title>
+  </head>
+  <body>
+    <script>
+      // 랜덤한 숫자를 출력 - Math.random();
+      // 범위는 0.0 에서 1.0
+      console.log(Math.random());
+
+      // 숫자를 정수로 만들기: 반올림, 버림, 올림
+      // 0부터 4까지의 정수가 나오도록 하기
+      let random = Math.random() * 1000;
+      let menu = Math.round(random) % 5;
+
+      const foods = ["한식", "양식", "분식", "일식", "중식"];
+      console.log(foods[menu]);
+    </script>
+  </body>
+</html>
