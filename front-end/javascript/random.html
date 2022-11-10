@@ -26,34 +26,34 @@
       // 이 문자열에서 GCCG를 찾아서 첫 글자의 위치를 전부 출력하시오.
       // 앞에서 사용한 데이터는 다시 사용하면 안된다.
       let answer = [];
-      let cnt = 0;
-      while (cnt < str.length) {
-        const testStr = str.slice(cnt, cnt + 4);
+      let idx = 0;
+      while (idx < str.length) {
+        const testStr = str.slice(idx, idx + 4);
 
         if (testStr == "GCCG") {
-          answer.push(cnt);
-          cnt += 4;
+          answer.push(idx);
+          idx += 4;
           continue;
         }
-        cnt++;
+        idx++;
       }
       console.log(answer);
 
       // charAt 이용하기
       let answer2 = [];
-      let cnt2 = 0;
-      while (cnt2 < str.length) {
+      let idx2 = 0;
+      while (idx2 < str.length) {
         if (
-          str.charAt(cnt2) == "G" &&
-          str.charAt(cnt2 + 1) == "C" &&
-          str.charAt(cnt2 + 2) == "C" &&
-          str.charAt(cnt2 + 3) == "G"
+          str.charAt(idx2) == "G" &&
+          str.charAt(idx2 + 1) == "C" &&
+          str.charAt(idx2 + 2) == "C" &&
+          str.charAt(idx2 + 3) == "G"
         ) {
-          answer2.push(cnt2);
-          cnt2 += 4;
+          answer2.push(idx2);
+          idx2 += 4;
           continue;
         }
-        cnt2++;
+        idx2++;
       }
       console.log(answer2);
     </script>
