@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Map And Set</title>
+  </head>
+  <body>
+    <script>
+      let set = new Set();
+      set.add("javascript");
+      set.add("java");
+      set.add("javascript");
+      console.log(set);
+
+      let map = new Map();
+      // Map은 동일한 key에 데이터를 여러 번 저장하면 마지막 데이터로 수정
+      map.set("name", "gyumin");
+      console.log(map);
+      map.set("name", "kymgyumin");
+      console.log(map);
+
+      // 데이터 가져오기
+      console.log(map.get("name"));
+      console.log(map.get("이름"));
+
+      map.set("name2", "jack");
+
+      // 전체 데이터 순회
+      for (key of map.keys()) {
+        console.log(key);
+      }
+      for (value of map.values()) {
+        console.log(value);
+      }
+
+      for (entry of map.entries()) {
+        console.log(entry);
+      }
+    </script>
+  </body>
+</html>
