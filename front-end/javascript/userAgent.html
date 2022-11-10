@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Agent</title>
+  </head>
+  <body>
+    <script>
+      // iphone이나 ipod, android 접속한 것을 확인
+      // 이러한 코드는 대부분 서버에 작성한다.
+      let os = ["iphone", "ipod", "android"];
+
+      for (let o of os) {
+        // os 배열에 있는 문자열이 userAgent에 포함되었는지 여부를 확인
+        if (navigator.userAgent.toLocaleLowerCase().indexOf(o) >= 0) {
+          // 배열에 포함된 운영체제에서 접속했을 때 수행할 작업
+          alert(navigator.userAgent);
+          break;
+        }
+      }
+    </script>
+  </body>
+</html>
