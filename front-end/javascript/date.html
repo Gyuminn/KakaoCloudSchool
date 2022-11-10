@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Date</title>
+  </head>
+  <body>
+    <script>
+      // 1997년 1월 29일에서 현재까지 지나온 날 수
+
+      // 현재 날짜 가져오기
+      let today = new Date();
+      // 1997년 1월 29일 설정
+      let meetDay = new Date(1997, 0, 29);
+
+      console.log(meetDay);
+
+      let interval = today.getTime() - meetDay.getTime();
+      let date = interval / (1000 * 60 * 60 * 24);
+      console.log(`지나온 날 수: ${Math.round(date)}`);
+    </script>
+  </body>
+</html>
