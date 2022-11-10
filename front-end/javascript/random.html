@@ -38,6 +38,24 @@
         cnt++;
       }
       console.log(answer);
+
+      // charAt 이용하기
+      let answer2 = [];
+      let cnt2 = 0;
+      while (cnt2 < str.length) {
+        if (
+          str.charAt(cnt2) == "G" &&
+          str.charAt(cnt2 + 1) == "C" &&
+          str.charAt(cnt2 + 2) == "C" &&
+          str.charAt(cnt2 + 3) == "G"
+        ) {
+          answer2.push(cnt2);
+          cnt2 += 4;
+          continue;
+        }
+        cnt2++;
+      }
+      console.log(answer2);
     </script>
   </body>
 </html>
