@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>event bubbling</title>
+  </head>
+  <body>
+    <h1 id="outer">
+      <span id="inner">인라인 태그 </span>
+    </h1>
+    <script>
+      document.getElementById("outer").addEventListener("click", (e) => {
+        alert("Outer 클릭");
+      });
+
+      document.getElementById("inner").addEventListener("click", (e) => {
+        alert("Inner 클릭");
+        //버블링 막기
+        e.stopPropagation();
+      });
+    </script>
+  </body>
+</html>
