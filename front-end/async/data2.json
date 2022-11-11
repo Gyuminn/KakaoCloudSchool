@@ -1,0 +1,8 @@
+{
+    "count": 3,
+    "documents": [
+                    {"name": "gyumin", "job": "programmer", "age": 26},
+                    {"name": "haeeun", "job": "stuodis", "age": 29},
+                    {"name": "hyungyu", "job": "student", "age": 25}
+                ]
+}
