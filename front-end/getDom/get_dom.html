@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM</title>
+  </head>
+  <body>
+    <h1 id="header">h1</h1>
+    <p id="content">p</p>
+    <input type="text" id="alias" value="gyumin" />
+
+    <!-- form 안에 있으면 submit 기능 -->
+    <button onclick="alert('인라인처리')">버튼 1</button>
+    <input type="button" value="버튼2" id="btn" />
+    <script>
+      let header = document.getElementById("header");
+      let content = document.getElementById("content");
+      let alias = document.getElementById("alias");
+
+      header.style.color = "red";
+      header.style.border = "2px solid black";
+      content.innerHTML += "텍스트 추가";
+      alert(alias.value);
+
+      /*
+      document.getElementById("btn").onclick = function () {
+        alert("고전적 이벤트 처리 모델");
+      };
+      */
+
+      document.getElementById("btn").addEventListener("click", () => {
+        alert("표준 이벤트 모델");
+      });
+    </script>
+  </body>
+</html>
