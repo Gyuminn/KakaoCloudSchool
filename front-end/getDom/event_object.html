@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이벤트 객체의 내용</title>
+  </head>
+  <body>
+    <p id="paragraph">문단 태그</p>
+    <button id="btn">버튼</button>
+    <script>
+      document.getElementById("paragraph").addEventListener("click", (e) => {
+        for (attr in e) {
+          console.log(attr + ":" + e[attr]);
+        }
+      });
+
+      document.getElementById("btn").addEventListener("click", () => {
+        // 문단 태그의 클릭이 발생하도록 강제로 이벤트 발생시키기
+        document.getElementById("paragraph").click();
+      });
+    </script>
+  </body>
+</html>
