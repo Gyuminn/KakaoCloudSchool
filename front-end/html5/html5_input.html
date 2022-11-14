@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>폼의 변화</title>
+  </head>
+  <body>
+    이름<input type="text" /><br />
+    나이<input type="number" /><br />
+    날짜<input type="date" /><br />
+
+    <progress id="progress" value="0" max="50"></progress>
+    <input type="button" id="btn" value="시작" />
+    <script>
+      let progress = document.getElementById("progress");
+      let btn = document.getElementById("btn");
+
+      // 버튼을 누르면 progress의 value를 1초마다 10씩 증가
+      btn.addEventListener("click", () => {
+        // 1초마다 작업하기
+        let timer = setInterval(() => {
+          progress.value += 10;
+
+          // 메모리 누수(memory leak) 방지
+          // memory leak은 용도가 끝났는데도 작업을 계속 수행하고 있어서 메모리 낭비가 발생하는 것
+          // 입출력 작업을 수행하거나 타이머 같은 자원을 사용할 때 주로 발생
+          // 타이머는 사용이 끝나면 해제해 주어야 하고 입출력 작업은 스트림을 닫아야 된다.
+          if (progress.value == 100) {
+            clearInterval(timer);
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
