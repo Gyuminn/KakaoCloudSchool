@@ -37,7 +37,6 @@
       bgsound, applet 등
 
 3. **API 변화**
-
    1. 로컬 저장소(이전에는 Cookie만 사용)
       - Web Storage
       - Web SQL
@@ -51,7 +50,6 @@
       - ajax level 2
       - Server Sent Events(Web Push)
       - Web Socket API
-
 4. **권장사항**
 
    1. Cookie보다는 Local Storage를 이용하는 것을 권장
@@ -274,6 +272,220 @@
 
       Web Server부터 Data Server까지는 애플리케이션과 다른 곳에 위치 - Web Client와 Server 간에 통신을 하게되면 Traffic이 발생하고 비용이 발생
 
-      Web Client에서 Web Server로 전송하기 전에 유효성 검사를 해야하고 Application Server가 Web Client로부터 Data를 전송받으면 유효성 검사를 해야 합니다.
+      Web Client에서 Web Server로 전송하기 전에 유효성 검사를 해야하고 Application Server가 Web Client로부터 Data를 전송받으면 유효성 검사를 해야 한다.
 
       Web Client에서 유효성 검사를 수행해서 조건에 맞지 않는 경우 전송을 하지 않으면 Traffic을 아낄 수 있기 때문에 수행해야 하고 Application Server에서 다시 하는 이유는 데이터 전송 중에 변형이 이루어졌을지 모르기 때문이다.
+
+10. **Geo Location**
+
+    1. 개요
+
+       디바이스의 물리적 위치 정보를 파악하기 위한 JavaScript API
+
+       위치 정보를 가져오는 법
+
+       - GPS와 같은 위성 정보를 이용해서 가져오는 방법
+       - 가까운 라우터의 위치
+       - 기지국의 위치
+
+       위치 정보 사용을 허용을 해야만 사용 가능
+
+    2. 위치 정보 사용 가능 여부 확인
+
+       navigator.geolocation의 값을 확인.
+
+    3. 위치 정보를 가져와서 한 번만 사용하기
+
+       ```jsx
+       navigator.geolocation.getCurrentPosition(위치 정보를 가져오는데 성공했을 때 호출되는 함수, 위치 정보를 가져오는데 실패했을 때 호출되는 함수, 옵션)
+       ```
+
+       성공했을 때 호출되는 함수에는 매개변수로 위치 정보와 관련된 객체가 전달된다. 이 객체가 저장하고 있는 정보는 JavaScript 뿐만 아니라 모바일 API에서도 동일하다.
+
+       - coords
+         - latitude: 위도
+         - longitude: 경도
+         - altitude: (고도 - GPS가 아니면 없음)
+         - accuracy: 정확도
+         - altitudeAccuracy: 고도의 정확도
+         - heading: 방향
+         - speed: 속도
+       - timestamp: 위치 정보를 가져온 시간.
+
+       실패했을 때 호출되는 함수에도 매개변수가 전달되는데 이 경우에는 에러 객체가 전달되고 code 속성을 확인하면 실패한 이유를 알 수 있다.
+
+    4. 위치 정보를 계속 가져와서 사용하기
+
+       ```jsx
+       let 변수 = navigator.geolocation.watchPosition(위치 정보를 가져오는데 성공했을 때 호출되는 함수, 위치 정보를 가져오는데 실패했을 때 호출되는 함수, 옵션)
+       ```
+
+       위치 정보를 계속해서 파악하는 것을 변수로 선언하는 이유는 clearWatch(변수)를 호출해서 더 이상 위치 정보를 가져오지 않도록 하기 위함이다.
+
+    5. 옵션
+
+       객체 형태로 대입
+
+       ```jsx
+       {
+       	enableHighAccuracy: // 정확도가 높은 위치 정보를 사용하도록 하는 옵션인데 기본값은 false
+       	timeout: // 일정 시간이 지난 데이터는 폐기하는 옵션으로 밀리초 단위로 설정
+       	maximumAge: // 0을 설정하면 항상 최신의 데이터를 가져온다.
+       }
+       ```
+
+       스마트 폰을 이용하는 경우는 옵션 설정이 중요하다.
+
+       스마트 폰에서 배터리를 가장 많이 소비하는 2가지가 블루투스를 사용하는 것과 gps를 이용하는 경우이다.
+
+    6. 웹 화면에 현재 위치에 해당하는 카카오 맵을 출력
+
+       Kakao Open Api: https://developers.kakao.com
+
+       애플리케이션을 생성하고 key 발급
+
+       javascript키 복사
+
+       키는 바로 사용이 불가능 - 플랫폼을 등록해야 한다.
+
+       네이티브 앱은 앱의 패키지 이름을 등록해야 하고 웹의 경우는 도메인을 등록해야한다.
+
+       연습할 때는 웹의 경우는 ‘http://localhost:포트번호’ 형태로 등록하고 실제 서비스에 사용을 할 때는 localhost:포트번호 대신에 등록한 도메인이나 실 사용이 가능한 공인 IP 형태로 변경을 해야 한다.
+
+11. **File API**
+
+    File을 읽고 쓰기 위한 API
+
+    input 타입의 file에 multiple 속성이 추가되어서 이 속성의 값을 설정하면 여러 개의 파일을 선택하는 것이 가능.
+
+    텍스트 파일을 읽을 때는 인코딩 설정에 주의해야 한다.
+
+    일반 파일을 읽을 때는 FileReader 객체를 생성한 후 reader.readAsDataURL(파일 객체)를 호출하고 load 이벤트와 error 이벤트를 처리한다.
+
+    load는 전부 읽었을 때 FileReader 객체의 result에 읽은 내용을 저장하고 error 이벤트는 읽기에 실패했을 때 실패한 이유를 저장하고 있는 객체를 넘겨준다.
+
+    이미지 미리보기
+
+12. **Drag And Drop API**
+
+    브라우저 내에서 사용할 수도 있고 외부 프로그램과 브라우저 사이에서도 사용할 수 있음.
+
+    외부 프로그램과 사용할 때는 외부 프로그램에서 드래그를 하고 브라우저에서 드랍을 해야 한다.
+
+    파일을 첨부할 때 많이 사용.
+
+13. **브라우저에 데이터를 저장**
+
+    1. 브라우저에 데이터를 저장하는 이유
+
+       불필요한 트래픽을 줄이기 위해서
+
+       메일 앱의 경우 매번 서버에 접속해서 서버의 데이터를 받아오는 것은 자원의 낭비가 될 수 있다.
+
+       맨 처음 접속을 할 때는 데이터를 다운로드 받고(파일의 존재 여부를 확인)
+
+       양쪽의 시간이 다르면 데이터가 수정된 것이므로 다운로드를 받고 양쪽의 시간이 같다면 업데이트 된 내용이 없으므로 다운로드를 받지 않도록 구현을 한다.
+
+       offline 상태에서도 데이터를 사용할 수 있도록 하기 위해서
+
+    2. 브라우저에 데이터를 저장하는 방법
+       - Web Storage: Map의 형태로 저장
+       - Web SQL: 관계형 데이터베이스(SQLite3 - 외부에서는 접속이 불가능한 저용량 데이터베이스, 사용법은 MySQL과 유사) 이용.
+       - Indexed DB: 자바스크립트 객체 형태로 저장 - NoSQL과 유사
+    3. Web Storage
+
+       종류는 2가지
+
+       기존에는 cookie를 사용했는데 Cookie를 사용하게 되면 문자열만 저장할 수 있고 서버에게 매 번 전송된다. 전송 여부를 클라이언트가 결정할 수 없다.
+
+       - LocalStorage: 브라우저에 저장해서 지우지 않는한 절대 삭제가 되지 않는 저장소
+       - SessionStorage: 현재 접속 중인 브라우저에 해당하는 저장소로 접속이 종료되면 소멸된다.
+
+       데이터 저장과 가져오기 그리고 삭제
+
+       ```jsx
+       // localstorage와 sessionstorage 동일
+
+       // 저장
+       스토리지.키이름 = 데이터;
+       스토리지["키이름"] = 데이터;
+       스토리지.setItem("키이름", 데이터);
+
+       // 가져오기
+       스토리지.키이름;
+       스토리지["키이름"];
+       스토리지.getItem("키이름");
+
+       // 삭제
+       delete 스토리지.키이름;
+       delete 스토리지["키이름"];
+       스토리지.removeItem("키이름");
+       ```
+
+       저장소에 데이터가 변경되면 window 객체에 storage 이벤트가 발생하고 이벤트 객체에는 key, oldVlaue, newValue, url, sotrageArea 같은 속성이 만들어진다.
+
+       Local Stroage는 전역변수 `localStorage` 로 사용할 수 있고 Session Storage는 `sessionStorage` 로 사용할 수 있다.
+
+       저장된 내용을 확인하는 방법은 브라우저의 검사 창에서 application을 확인하면 된다.
+
+       - 세션 스토리지
+         브라우저를 종료했을 때 내용이 소멸되는지와 현재 창에서 새 창을 출력했을 때 내용이 복제가 되는지 확인
+       - 로컬 스토리지
+         id 저장을 구현하는데 브라우저를 종료하고 다시 연결했을 때 내용이 존재하는지 여부를 확인.
+         보안이 중요하지 않고 많지 않은 양의 데이터를 저장하는데 용이.(장바구니)
+
+       동일한 패턴의 데이터가 많은 경우는 로컬 스토리지 보다는 Web SQL이나 Indexed DB를 권장
+
+14. **Web Worker**
+
+    JavaScript를 이용한 백그라운드 처리
+
+    JavaScript에서는 Thread 표현 대신에 Worker라는 표현을 사용
+
+    HTML과 함께 있는 Javascript 코드에서 긴 작업을 수행하게 되면 작업이 끝날 때까지 다른 작업을 수행할 수 없음(UI는 아무것도 할 수 없는 상태)
+
+    예전에 개념에서는 모든 작업을 수행하고 클라이언트는 서버가 렌더링한 뷰를 출력하는 역할만 수행했었고 자바스크립트를 가지고 작업을 수행하는 것은 특별한 경우였다.
+
+    Web Worker는 UI 변경을 하지 못하고 DOM 객체 제어를 할 수 없지만 localStorage와 XMLHttpRequest(ajax) 사용은 가능
+
+    ```jsx
+    // 워커는 별도의 스크립트 파일에 만들어야 함.
+    let 워커변수 = new Worker("자바스크립트 파일 경로");
+
+    // 워커와 브라우저 사이의 메시지 전송
+    워커변수.postMessage("메시지"); // 워커에서는 message 이벤트가 발생
+    // 워커 파일에서는 postMessage("메시지") => 워커 변수에 message가 발생
+
+    // sendMessage는 바로 처리해달라는 요청이고 postMessage는 다른 작업이 없으면
+    // 처리해달라고 하는 요청이다.
+    ```
+
+    message 이벤트가 발생하면 매개변수에 data와 error를 가진 객체가 전달된다.
+
+    워커는 terminate()를 호출해서 중지가 가능.
+
+15. **Application Cache**
+
+    리소스의 일부분을 로컬에 저장하기 위한 기능
+
+    오프라인 브라우징이 가능해지고 리소스를 빠르게 로드할 수 있고 서버 부하를 감소시킬 수 있다.
+
+    css나 js 그리고 이미지 파일 등을 캐싱
+
+16. **Web Push**
+
+    Server Sent Events: 클라이언트의 요청 없이 서버가 클라이언트에게 메시지를 전송하는 것. 사용하는 이유는 알림.
+
+    Apple Server가 보내는 Push를 APNS(Apple Push Notification Service)라고 하고 Google Server가 보내는 Push를 FCM(Firebase Cloud Messge)라고 한다.
+
+17. **Web Socket**
+
+    Web에서의 TCP 통신을 위한 API
+
+    일반적인 Web 요청의 처리 방식은 Client가 Server에게 접속을 한 후 하나의 request를 전송하고 그 request를 Server가 받으면 처리를 하고 response를 Client에게 전송하고 접속이 끊어짐.
+
+    연속되는 작업을 처리하기 위해 Cookie(클라이언트의 브라우저에 저장)와 Session(서버에 저장)이라는 개념을 도입
+
+    일반적인 Web 요청(HTTP나 HTTPS)은 본문 이외에 헤더 정보를 같이 전송해야 한다. 작은 사이즈의 데이터를 보내는 경우 오버헤드가 너무 크다.
+
+    Web Socket을 이용하면 헤더가 거의 없기 때문에 이러한 오버헤드를 줄일 수 있음. 따라서 작은 양의 메시지를 자주 주고 받는 경우는 ajax나 Fetch API보다는 Web Socket을 사용하는 것을 권장
