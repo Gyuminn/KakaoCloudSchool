@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="Kakao">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>image preview</title>
+  </head>
+  <body>
+    <!-- 이미지 파일만 선택할 수 있는 file 객체-->
+    <input type="file" accept=".jpeg" id="imginput" />
+    <!-- 이미지 미리보기 영역-->
+    <img id="display" width="250" height="250" />
+    <script>
+      let imgInput = document.getElementById("imginput");
+      let display = document.getElementById("display");
+
+      // imginput의 선택이 변경되면
+      imgInput.addEventListener("change", (e) => {
+        // 선택한 파일의 내용 읽기 - 비동기로 수행됨
+        let reader = new FileReader();
+        // 파일이 없다면
+        if (imgInput.files && !imgInput.files[0]) {
+          alert("선택된 파일이 없음");
+          return;
+        }
+
+        reader.readAsDataURL(imgInput.files[0]);
+        // 파일의 내용을 전부 읽으면
+        reader.addEventListener("load", () => {
+          display.src = reader.result;
+        });
+      });
+    </script>
+  </body>
+</html>
