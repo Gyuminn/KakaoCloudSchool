@@ -1,0 +1,19 @@
+{
+  "name": "gyuminnode",
+  "version": "1.0.0",
+  "description": "practice node first",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gyuminn/kakaoCloudSchool.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gyuminn/kakaoCloudSchool/issues"
+  },
+  "homepage": "https://github.com/Gyuminn/kakaoCloudSchool#readme"
+}
