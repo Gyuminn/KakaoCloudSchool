@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Map Kakao API</title>
+  </head>
+  <body>
+    <div id="map" style="width: 500px; height: 400px"></div>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=개인 API KEY 입력"
+    ></script>
+    <script>
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          let container = document.getElementById("map");
+          let [lang, long] = [
+            position.coords.latitude,
+            position.coords.longitude,
+          ];
+          let options = {
+            center: new kakao.maps.LatLng(lang, long),
+            level: 3,
+          };
+
+          let map = new kakao.maps.Map(container, options);
+          // 마커가 표시될 위치입니다
+          let markerPosition = new kakao.maps.LatLng(lang, long);
+
+          // 마커를 생성합니다
+          let marker = new kakao.maps.Marker({
+            position: markerPosition,
+          });
+
+          // 마커가 지도 위에 표시되도록 설정합니다
+          marker.setMap(map);
+        },
+        (e) => {},
+        {}
+      );
+    </script>
+  </body>
+</html>
