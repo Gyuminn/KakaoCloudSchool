@@ -76,10 +76,22 @@ const upload = multer({
   limits: { fileSize: 1024 * 1024 * 10 },
 });
 
+/*
 // 5. 사용자의 요청 처리
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./index.html"));
 });
+*/
+
+// 18. 라우팅 관련 파일 가져오기
+const indexRouter = require("./routes/index");
+const userRouter = require("./routes/user");
+const boardRouter = require("./routes/board");
+
+// 19. url과 매핑
+app.use("/", indexRouter); // / 요청은 indexRouter에서 처리
+app.use("/user", userRouter); // /user 요청은 userRouter에서 처리
+app.use("/board", boardRouter); // /board 요청은 boardRouter에서 처리
 
 // 16. 하나의 파일 업로드 처리
 app.get("/single", (req, res) => {
