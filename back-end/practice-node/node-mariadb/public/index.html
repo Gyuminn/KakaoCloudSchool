@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Node - MariaDB</title>
+    <link rel="stylesheet" href="./css/common.css" />
+  </head>
+  <script>
+    window.addEventListener("load", (e) => {
+      // DOM 찾아오기
+      let allbtn = document.getElementById("allbtn");
+      let content = document.getElementById("content");
+
+      // allbtn 클릭 이벤트 처리
+      allbtn.addEventListener("click", (e) => {
+        // ajax로 데이터 가져오기
+        let request = new XMLHttpRequest();
+        // 뷰랑 서버가 같이 있을 때는 ip 번호와 포트번호는 생략해도 된다.
+        // 그렇지만 리액트같은걸로 따로 개발할 때는 모두 써줘야 함. (http://127.0.0.1:9000/item/all)
+        // 요청 생성
+        request.open("GET", "/item/all");
+
+        // 요청
+        request.send("");
+
+        // 데이터가 전송된 경우 처리
+        request.addEventListener("load", () => {
+          // 출력을 하기 위해서는 JSON 문자열을 자바스크립트 객체로 변환해야 함
+          let data = JSON.parse(request.responseText);
+          if (data.result == true) {
+            content.innerHTML = "<div align='center' class='body1'>";
+            content.innerHTML += "<h2>상품 목록</h2>";
+            content.innerHTML += "<table border='1'>";
+            content.innerHTML += "<tr class='header'>";
+            content.innerHTML += "<th align='center' width='80'>ID</th>";
+            content.innerHTML += "<th align='center' width='320'>이름</th>";
+            content.innerHTML += "<th align='center' width='100'>가격</th>";
+
+            // list 키에 있는 데이터를 가져오기
+            let ar = data.list;
+
+            for (let item of ar) {
+              content.innerHTML += "<tr class='record'>";
+
+              content.innerHTML +=
+                "<td align='center'>" + item.itemid + "</td>";
+              content.innerHTML +=
+                "<td align='left'>" + item.itemname + "</td>";
+              content.innerHTML += "<td align='right'>" + item.price + "</td>";
+              content.innerHTML += "</tr>";
+            }
+            content.innerHTML += "</tr>";
+            content.innerHTML += "</table>";
+            content.innerHTML += "</div>";
+          } else {
+            content.innerHTML = "데이터 가져오기 실패";
+          }
+        });
+      });
+    });
+  </script>
+  <body>
+    <h1>Maria DB</h1>
+    <input type="button" value="전체 데이터 가져오기" id="allbtn" /><br />
+    <!-- 데이터 출력 영역 -->
+    <div id="content"></div>
+  </body>
+</html>
