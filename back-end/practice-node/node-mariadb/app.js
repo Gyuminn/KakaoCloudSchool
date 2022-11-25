@@ -72,7 +72,7 @@ app.use(
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, done) {
-      done(null, "public/img");
+      done(null, __dirname + "/public/img");
     },
     filename(req, file, done) {
       const ext = path.extname(file.originalname);
@@ -225,6 +225,107 @@ app.get("/img/:pictureurl", (req, res) => {
   fileStream.pipe(res);
 });
 
+// 23. 현재 날짜를 문자열로 리턴하는 함수
+const getDate = () => {
+  let date = new Date();
+
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDay();
+
+  month = month >= 10 ? month : "0" + month;
+  day = day >= 10 ? day : "0" + day;
+
+  return year + "-" + month + "-" + day;
+};
+
+// 24. 날짜와 시간을 리턴하는 함수
+const getTime = () => {
+  let date = new Date();
+  let hour = date.getHours();
+  let minute = date.getMinutes();
+  let second = date.getSeconds();
+
+  hour = hour >= 10 ? hour : "0" + hour;
+  minute = minute >= 10 ? minute : "0" + minute;
+  second = second >= 10 ? second : "0" + second;
+
+  return getDate() + " " + hour + ":" + minute + ":" + second;
+};
+
+// 25. 데이터 삽입을 처리해주는 함수
+// pictureurl 이라는 url로 요청해야한다는 것을 프론트쪽에 알려줘야 함.
+// 또한 body에 들어가는 이름들도 알려주어야 함.
+app.post("/item/insert", upload.single("pictureurl"), (req, res) => {
+  // 파라미터 읽어오기
+  const itemname = req.body.itemname;
+  const description = req.body.description;
+  const price = req.body.price;
+
+  // 파일 이름 - 업로드하는 파일이 없으면 default.jpg
+  let pictureurl;
+  if (req.file) {
+    pictureurl = req.file.filename;
+  } else {
+    pictureurl = "default.jpg";
+  }
+
+  // 가장 큰 itemid 찾기
+  connection.query(
+    "select max(itemid) maxid from goods",
+    [],
+    (err, results, fields) => {
+      let itemid;
+      // 최대값이 있으면 + 1을 하고 없으면 1로 설정
+      if (results.length > 0) {
+        itemid = results[0].maxid + 1;
+      } else {
+        itemid = 1;
+      }
+
+      connection.query(
+        "insert into goods(itemid, itemname, price, description, pictureurl, updatedate) values(?, ?, ?, ?, ?, ?)",
+        [itemid, itemname, price, description, pictureurl, getDate()],
+        (err, results, fields) => {
+          if (err) {
+            console.log(err);
+            res.json({ result: false });
+          } else {
+            // 현재 날짜 및 시간을 update.txt에 기록
+            const writeStream = fs.createWriteStream(__dirname + "/update.txt");
+            writeStream.write(getTime());
+            writeStream.end();
+            res.json({ result: true });
+          }
+        }
+      );
+    }
+  );
+});
+
+// 26. 데이터를 삭제하는 함수
+app.post("/item/delete", (req, res) => {
+  // post 방식으로 전송된 데이터 읽기
+  let itemid = req.body.itemid;
+
+  // itemid를 받아서 goods 테이블에서 삭제하기
+  connection.query(
+    "delete from goods where itemid=?",
+    [itemid],
+    (err, results, fields) => {
+      if (err) {
+        console.log(err);
+        res.json({ result: false });
+      } else {
+        // 현재 날짜 및 시간을 update.txt에 기록
+        const writeStream = fs.createWriteStream(__dirname + "/update.txt");
+        writeStream.write(getTime());
+        writeStream.end();
+        res.json({ result: true });
+      }
+    }
+  );
+});
 // 3. 에러 발생시 처리
 app.use((err, req, res, next) => {
   console.log(err);
