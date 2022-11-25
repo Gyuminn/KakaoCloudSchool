@@ -144,15 +144,43 @@ app.get("/item/list", (req, res) => {
   // 시작번호 = (pageno - 1) * 5
   // 파라미터는 무조건 문자열이다.
   // 파라미터를 가지고 산술연산을 할 때는 숫자로 변환을 수행
+  // 성공과 실패 여부를 저장
+  let result = true;
+  // 성공했을 때 데이터를 저장
+  let list;
+  // 데이터 목록 가져오기
   connection.query(
     "select * from goods order by itemid desc limit ?, 5",
     [(+pageno - 1) * 5],
     (err, results, fields) => {
       if (err) {
         console.log(err);
-        res.json({ result: false });
+        result = false;
       } else {
-        res.json({ result: true, list: results });
+        list = results;
+        // 테이블의 전체 데이터 개수를 가져오기
+        let cnt = 0;
+        connection.query(
+          "select count(*) cnt from goods",
+          [],
+          (err, results, fields) => {
+            if (err) {
+              // 에러가 발생했을 떄
+              result = false;
+            } else {
+              // 정상적으로 구문이 실행되었을 때
+              // 하나의 행만 리턴되므로 0번쨰 데이터를 읽어내면 된다.
+              cnt = results[0].cnt;
+            }
+
+            // 응답 생성해서 전송
+            if (result == false) {
+              res.json({ result: false });
+            } else {
+              res.json({ result: true, list: list, count: cnt });
+            }
+          }
+        );
       }
     }
   );
