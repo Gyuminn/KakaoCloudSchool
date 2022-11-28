@@ -2,7 +2,7 @@
   "name": "practice-node",
   "version": "1.0.0",
   "description": "practice node",
-  "main": "node-mariadb/app.js",
+  "main": "node-mariadb-relativetable/app.js",
   "scripts": {
     "start": "nodemon app"
   },
