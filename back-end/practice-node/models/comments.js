@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 
 module.exports = class Comment extends Sequelize.Model {
-  static int(sequelize) {
+  static init(sequelize) {
     // 테이블에 대한 설정
     return super.init(
       {

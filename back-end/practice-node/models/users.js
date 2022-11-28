@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 
 module.exports = class User extends Sequelize.Model {
-  static int(sequelize) {
+  static init(sequelize) {
     // 테이블에 대한 설정
     return super.init(
       {
@@ -17,11 +17,10 @@ module.exports = class User extends Sequelize.Model {
         },
       },
       {
-        // 테이블에 대한 설정
         sequelize,
         timestamps: true,
-        modelName: " User",
         tableName: "users",
+        modelName: "User",
         paranoid: false,
         charset: "utf8",
         collate: "utf8_general_ci",
