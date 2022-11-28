@@ -1,5 +1,5 @@
-const { odd, even } = require("./variable");
-const checkNumber = require("./function");
+const { odd, even } = require("./app_variable");
+const checkNumber = require("./app_function");
 
 console.log(checkNumber(5));
 

@@ -26,6 +26,16 @@
             "date": 1669336188099,
             "name": "/Users/gimgyumin/Documents/kakaoCloudSchool/back-end/practice-node/node-mariadb/log/access-20221125.log",
             "hash": "32a6e9d50d10182fda658b83f39ccfa2"
+        },
+        {
+            "date": 1669442074305,
+            "name": "/Users/gimgyumin/Documents/kakaoCloudSchool/back-end/practice-node/node-mariadb/log/access-20221126.log",
+            "hash": "1905c244b67813781a2f505e71ccdfd2"
+        },
+        {
+            "date": 1669594589995,
+            "name": "/Users/gimgyumin/Documents/kakaoCloudSchool/back-end/practice-node/node-mariadb/log/access-20221128.log",
+            "hash": "0e1bb439541928c0b7df42b717ea0143"
         }
     ]
 }

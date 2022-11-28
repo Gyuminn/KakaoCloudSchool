@@ -192,7 +192,7 @@
                 "'/>" +
                 "<img src='/img/" +
                 item.pictureurl +
-                "'/></td>";
+                "' width=300 height=300/></td>";
 
               display += "<td align='center'><table>";
               display += "<tr height='50'><td width='80'>상품명</td>";
@@ -225,6 +225,46 @@
                   request.addEventListener("load", () => {
                     let html = request.responseText;
                     content.innerHTML = html;
+                    // 수정은 수정하기 위한 원본 데이터를 화면에 출력
+                    document.getElementById("itemid").value = item.itemid;
+                    document.getElementById("itemid").readOnly = true;
+                    document.getElementById("itemname").value = item.itemname;
+                    document.getElementById("price").value = item.price;
+                    document.getElementById("description").value =
+                      item.description;
+                    // 원본의 이름을 숨김
+                    document.getElementById("oldpictureurl").value =
+                      item.pictureurl;
+                    // 원본을 다른 방식으로 출력
+                    document.getElementById("picture").src =
+                      "/img/" + item.pictureurl;
+
+                    // 수정 폼을 찾아오기
+                    let updateForm = document.getElementById("updateform");
+                    if (updateForm != undefined) {
+                      updateForm.addEventListener("submit", (e) => {
+                        e.preventDefault();
+
+                        // 전송할 데이터 생성 - 폼 안에 입력한 데이터 생성
+                        const formData = new FormData(updateForm);
+
+                        // 서버에게 요청
+                        let request = new XMLHttpRequest();
+                        request.open("POST", "/item/update");
+                        request.send(formData);
+
+                        // 응답을 받았을 떄 처리
+                        request.addEventListener("load", () => {
+                          let data = JSON.parse(request.responseText);
+                          if (data.result === true) {
+                            document.getElementById("listbtn").click();
+                            alert("성공");
+                          } else {
+                            alert("실패");
+                          }
+                        });
+                      });
+                    }
                   });
                 });
               }
