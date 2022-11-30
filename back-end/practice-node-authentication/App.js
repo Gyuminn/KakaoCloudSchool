@@ -81,6 +81,16 @@ app.use(
   })
 );
 
+const { sequelize } = require("./models");
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log("데이터베이스 접속 성공");
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
 // 라우터 설정
 const pageRouter = require("./routes/page");
 // 여기 설정한 url과 page.js에 설정된 URL의 조합으로 URL을 결정
