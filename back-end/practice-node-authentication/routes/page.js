@@ -1,5 +1,5 @@
 const express = require("express");
-const { Model } = require("sequelize");
+const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
 const router = express.Router();
 
@@ -7,7 +7,8 @@ const router = express.Router();
 router.use((req, res, next) => {
   // 변수 초기화
   // 로그인한 유저 정보
-  res.locals.user = null;
+  // 6. 유저 정보를 res.locals.user에 저장
+  res.locals.user = req.user;
   // 게시글을 follow하고 되고 있는 개수
   res.locals.followCount = 0;
   res.locals.followingCoung = 0;
@@ -24,13 +25,13 @@ router.get("/", (req, res, next) => {
   res.render("main", { title: "Node Authentication", twits });
 });
 
-// 3. 회원 가입
-router.get("/join", (req, res, next) => {
+// 3. 회원 가입 - 7. 로그인이 되어있지 않은 경우만 수행
+router.get("/join", isNotLoggedIn, (req, res, next) => {
   res.render("join", { title: "회원 가입 - NodeAuthentication" });
 });
 
-// 4. 프로필 화면 처리
-router.get("/profile", (req, res, next) => {
+// 4. 프로필 화면 처리 - 8. 로그인이 되어 있는 경우에만 처리
+router.get("/profile", isLoggedIn, (req, res, next) => {
   res.render("join", { title: "나의 정보 - NodeAuthentication" });
 });
 

@@ -81,6 +81,7 @@ app.use(
   })
 );
 
+// 1. 데이터베이스 테이블 연동
 const { sequelize } = require("./models");
 sequelize
   .sync({ force: false })
@@ -91,12 +92,24 @@ sequelize
     console.log(error);
   });
 
+// 2. 로컬 로그인 구현
+const passport = require("passport");
+const passportConfig = require("./passport");
+// passport에서 모듈을 함수로 내보내주고 여기서 함수로 실행
+passportConfig();
+app.use(passport.initialize());
+// 세션 기능은 passport 모듈이 알아서 사용
+app.use(passport.session());
+
 // 라우터 설정
 const pageRouter = require("./routes/page");
 // 여기 설정한 url과 page.js에 설정된 URL의 조합으로 URL을 결정
 app.use("/", pageRouter);
 
-// 에러가 발생한 경우 처리
+const authRouter = require("./routes/auth");
+app.use("/auth", authRouter);
+
+// 404 에러가 발생한 경우 처리
 app.use((req, res, next) => {
   const err = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
   err.status = 404;
