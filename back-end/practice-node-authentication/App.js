@@ -82,8 +82,9 @@ app.use(
 );
 
 // 라우터 설정
-// const pageRouter = require("./routes/page");
-// app.use("/", pageRouter);
+const pageRouter = require("./routes/page");
+// 여기 설정한 url과 page.js에 설정된 URL의 조합으로 URL을 결정
+app.use("/", pageRouter);
 
 // 에러가 발생한 경우 처리
 app.use((req, res, next) => {
