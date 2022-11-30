@@ -3,6 +3,7 @@
 *.log
 *.txt
 
+back-end/practice-node-authentication/node_modules
 back-end/practice-node/node_modules
 back-end/practice-node/node-server-session/sessions
 back-end/practice-node/node-server-session/uploads
