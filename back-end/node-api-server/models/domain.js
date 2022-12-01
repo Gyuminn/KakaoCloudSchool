@@ -29,8 +29,8 @@ module.exports = class Domain extends Sequelize.Model {
     );
   }
 
-  // 관계에 대한 설정
   static associate(db) {
-    db.Hashtag.belongsToMany(db.Post, { through: "PostHashtag" });
+    // User의 기본키가 Domain의 외래키로 추가
+    db.Domain.belongsTo(db.User);
   }
 };

@@ -41,6 +41,7 @@ const accessLogStream = FileStreamRotator.getStream({
 // 로그 설정
 app.use(morgan("combined", { stream: accessLogStream }));
 
+//출력하는 파일 압축해서 전송
 const compression = require("compression");
 app.use(compression());
 
@@ -67,15 +68,6 @@ var options = {
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
 };
-
-//라우터 설정
-// const indexRouter = require("./routes");
-// app.use("/", indexRouter);
-
-const authRouter = require("./routes/auth");
-app.use("/auth", authRouter);
-
-app.use("/img", express.static(path.join(__dirname, "uploads")));
 
 const MySQLStore = require("express-mysql-session")(session);
 
@@ -104,3 +96,31 @@ const passportConfig = require("./passport");
 passportConfig();
 app.use(passport.initialize());
 app.use(passport.session());
+
+//라우터 설정
+const indexRouter = require("./routes");
+app.use("/", indexRouter);
+
+const authRouter = require("./routes/auth");
+app.use("/auth", authRouter);
+
+app.use("/img", express.static(path.join(__dirname, "uploads")));
+
+//에러가 발생한 경우 처리
+app.use((req, res, next) => {
+  const err = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
+  err.status = 404;
+  next(err);
+});
+
+//에러가 발생한 경우 처리
+app.use((err, req, res, next) => {
+  res.locals.message = err.message;
+  res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
+  res.status(err.status || 500);
+  res.render("error");
+});
+
+app.listen(app.get("port"), () => {
+  console.log(app.get("port"), "번 포트에서 대기 중");
+});
