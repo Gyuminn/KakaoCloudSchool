@@ -2,6 +2,7 @@ const express = require("express");
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
 const router = express.Router();
+const { Post, User, Hashtag } = require("../models");
 
 // 1. 공통된 처리 - 무조건 수행
 router.use((req, res, next) => {
@@ -10,14 +11,14 @@ router.use((req, res, next) => {
   // 6. 유저 정보를 res.locals.user에 저장
   res.locals.user = req.user;
   // 게시글을 follow하고 되고 있는 개수
-  res.locals.followCount = 0;
-  res.locals.followingCoung = 0;
+  res.locals.followerCount = req.user ? req.user.Followers.length : 0;
+  res.locals.followingCount = req.user ? req.user.Followings.length : 0;
   // 게시글을 follow하고 있는 유저들의 목록
-  res.locals.followerIdList = [];
+  res.locals.followerIdList = req.user
+    ? req.user.Followings.map((f) => f.id)
+    : [];
   next();
 });
-
-const { Post, User } = require("../models");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -47,6 +48,33 @@ router.get("/", async (req, res, next) => {
 //   res.render("main", { title: "Node Authentication", twits });
 // });
 
+router.get("/hashtag", async (req, res, next) => {
+  const query = req.query.hashtag;
+  if (!query) {
+    return res.redirect("/");
+  }
+  try {
+    const hashtag = await Hashtag.findOne({
+      where: { title: query },
+    });
+
+    let posts = [];
+    if (hashtag) {
+      posts = await hashtag.getPosts({
+        include: [{ model: User }],
+      });
+    }
+
+    return res.render("main", {
+      title: `${query} | NodeAuthentication`,
+      twits: posts,
+    });
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+});
+
 // 3. 회원 가입 - 7. 로그인이 되어있지 않은 경우만 수행
 router.get("/join", isNotLoggedIn, (req, res, next) => {
   res.render("join", { title: "회원 가입 - NodeAuthentication" });
@@ -54,7 +82,7 @@ router.get("/join", isNotLoggedIn, (req, res, next) => {
 
 // 4. 프로필 화면 처리 - 8. 로그인이 되어 있는 경우에만 처리
 router.get("/profile", isLoggedIn, (req, res, next) => {
-  res.render("join", { title: "나의 정보 - NodeAuthentication" });
+  res.render("profile", { title: "나의 정보 - NodeAuthentication" });
 });
 
 // 5. 내보내기
