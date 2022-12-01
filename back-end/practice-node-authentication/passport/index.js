@@ -1,5 +1,10 @@
 const passport = require("passport");
+// 로컬 로그인 구현
 const local = require("./localStrategy");
+
+// 카카오 로그인 구현
+const kakao = require("./kakaoStrategy");
+
 const User = require("../models/user");
 
 module.exports = () => {
@@ -14,5 +19,7 @@ module.exports = () => {
       .then((user) => done(null, user))
       .catch((err) => done(err));
   });
+
   local();
+  kakao();
 };
