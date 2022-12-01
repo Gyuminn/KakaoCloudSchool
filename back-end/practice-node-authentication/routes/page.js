@@ -17,13 +17,35 @@ router.use((req, res, next) => {
   next();
 });
 
-// 2. 메인 화면
-router.get("/", (req, res, next) => {
-  const twits = [];
-  // 템플릿 엔진을 이용한 출력.
-  // views 디렉토리의 main.html로 출력
-  res.render("main", { title: "Node Authentication", twits });
+const { Post, User } = require("../models");
+
+router.get("/", async (req, res, next) => {
+  try {
+    // Post 모델의 모든 데이터를 찾아오는데
+    // 이 때 User 정보의 id와 nick도 같이 가져오기
+    const posts = await Post.findAll({
+      include: {
+        model: User,
+        attributes: ["id", "nick"],
+      },
+      order: [["createdAt", "DESC"]],
+    });
+    res.render("main", {
+      title: "NodeAuthentication",
+      twits: posts,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
 });
+// 2. 메인 화면
+// router.get("/", (req, res, next) => {
+//   const twits = [];
+//   // 템플릿 엔진을 이용한 출력.
+//   // views 디렉토리의 main.html로 출력
+//   res.render("main", { title: "Node Authentication", twits });
+// });
 
 // 3. 회원 가입 - 7. 로그인이 되어있지 않은 경우만 수행
 router.get("/join", isNotLoggedIn, (req, res, next) => {
