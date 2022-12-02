@@ -4,6 +4,33 @@ const { Domain, User, Post, Hashtag } = require("../models");
 const { verifyToken, apiLimiter } = require("./middlewares");
 
 const router = express.Router();
+
+const cors = require("cors");
+const url = require("url");
+
+// 무조건 CORS를 허용
+// router.get(
+//   cors({
+//     credentials: true,
+//   })
+// );
+
+// Domain에 등록된 경우만 전송할 수 있도록 설정
+router.use(async (req, res, next) => {
+  // 현재 도멩ㅇㅇㅇㅇ인이
+  const domain = await Domain.findOne({
+    where: { host: url.parse(req.get("origin")).host },
+  });
+  if (domain) {
+    cors({
+      origin: req.get("origin"),
+      credentials: true,
+    })(req, res, next);
+  } else {
+    next();
+  }
+});
+
 // 데이터를 리턴하는 요청 처리
 router.get("/posts/my", apiLimiter, verifyToken, (req, res) => {
   Post.findAll({ where: { userId: req.decoded.id } })
