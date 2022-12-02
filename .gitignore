@@ -3,6 +3,7 @@
 *.log
 *.txt
 
+back-end/node-api-client/node_modules
 back-end/node-api-server/node_modules
 back-end/practice-node-authentication/node_modules
 back-end/practice-node/node_modules
