@@ -71,6 +71,7 @@ router.get("/test", async (req, res, next) => {
   }
 });
 
+// CORS 애러를 확인하기 위한 코드
 router.get("/", (req, res) => {
   res.render("main", { key: process.env.CLIENT_SECRET });
 });

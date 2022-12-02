@@ -17,7 +17,7 @@ const url = require("url");
 
 // Domain에 등록된 경우만 전송할 수 있도록 설정
 router.use(async (req, res, next) => {
-  // 현재 도멩ㅇㅇㅇㅇ인이
+  // 현재 요청 도메인이 데이터베이스에 등록된 도메인인지 찾아오기
   const domain = await Domain.findOne({
     where: { host: url.parse(req.get("origin")).host },
   });
