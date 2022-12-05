@@ -19,12 +19,18 @@ class ValidationSample extends Component {
       clicked: true,
       validate: this.state.password === "0000",
     });
+
+    // createRef 함수로 만든 경우
+    // this.input.current.focus();
+
+    this.input.focus();
   };
   render() {
     return (
       <>
         <input
           type="password"
+          ref={(ref) => (this.input = ref)}
           value={this.state.password}
           onChange={this.handleChange}
           className={
