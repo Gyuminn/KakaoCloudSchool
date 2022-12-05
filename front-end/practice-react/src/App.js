@@ -1,6 +1,7 @@
 import EventPractice from "./EventPractice";
 import MyComponent from "./MyComponent";
 import StateComponent from "./StateComponent";
+import ValidationSample from "./ValidationSample";
 
 export default function App() {
   return (
@@ -10,6 +11,8 @@ export default function App() {
       </MyComponent>
       <StateComponent />
       <EventPractice />
+      <br />
+      <ValidationSample />
     </>
   );
 }
