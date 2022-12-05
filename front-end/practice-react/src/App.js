@@ -1,3 +1,4 @@
+import EventPractice from "./EventPractice";
 import MyComponent from "./MyComponent";
 import StateComponent from "./StateComponent";
 
@@ -8,6 +9,7 @@ export default function App() {
         어쩌구 저쩌구
       </MyComponent>
       <StateComponent />
+      <EventPractice />
     </>
   );
 }
