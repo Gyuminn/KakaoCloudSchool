@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { InputSample } from "./InputSample";
 
 // 클래스 컴포넌트
@@ -42,39 +42,21 @@ const FunctionState = () => {
   );
 };
 
-class ClassEffect extends Component {
-  // 생성자
-  constructor(props) {
-    super(props);
-    console.log("생성자 - 가장 먼저 호출되는 메서드");
-    this.state = {
-      count: 0,
-    };
-  }
+const ClassEffect = () => {
+  const [count, setCount] = useState(0);
 
-  // Component가 Mount된 후 호출되는 메서드
-  componentDidMount() {
-    console.log("마운트된 후 호출되는 메서드");
-    document.title = `You clicked ${this.state.count} times`;
-  }
+  useEffect(() => {
+    console.log("마운트와 업데이트가 끝나면 호출");
+    document.title = `you clicked ${count} times`;
+  }, [count]);
 
-  // Component가 Update된 후 호출되는 메서드
-  componentDidUpdate() {
-    console.log("업데이트된 후 호출되는 메서드");
-    document.title = `Yout clicked ${this.state.count} times`;
-  }
-
-  render() {
-    return (
-      <div>
-        <p>You clicked {this.state.count} times</p>
-        <button onClick={(e) => this.setState({ count: this.state.count + 1 })}>
-          증가
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={(e) => setCount(count + 1)}>증가</button>
+    </div>
+  );
+};
 
 function App() {
   return (
