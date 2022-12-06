@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useRef, useState } from "react";
+import React, { Component, useEffect, useMemo, useRef, useState } from "react";
 import CreateUser from "./CreateUser";
 import { InputSample } from "./InputSample";
 import UserList from "./UserList";
@@ -58,6 +58,12 @@ const ClassEffect = () => {
       <button onClick={(e) => setCount(count + 1)}>증가</button>
     </div>
   );
+};
+
+// active가 true인 데이터의 개수
+const countActiveUser = (users) => {
+  console.log("사용자 수를 세기");
+  return users.filter((user) => user.active).length;
 };
 
 function App() {
@@ -131,6 +137,11 @@ function App() {
     );
   };
 
+  // 활성화된 user 개수를 세는 메서드 호출
+  // users에 변화가 생긴 경우만 함수를 호출하고
+  // 그 이외의 경우는 결과를 복사하도록 수정
+  const count = useMemo(() => countActiveUser(users), [users]);
+
   return (
     <>
       <ClassState />
@@ -148,6 +159,7 @@ function App() {
         handleChange={handleChange}
         handleCreate={handleCreate}
       />
+      <div>활성화된 유저 수 : {count}</div>
     </>
   );
 }
