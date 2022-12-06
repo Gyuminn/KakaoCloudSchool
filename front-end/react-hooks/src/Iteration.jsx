@@ -49,6 +49,7 @@ class Iteration extends Component {
     ));
     return (
       <>
+        {/* {this.state.missing.value} */}
         <input onChange={this.handleChange} value={this.state.name} />
         <button onClick={this.handleInsert}>추가</button>
         <ul>{nameList}</ul>
