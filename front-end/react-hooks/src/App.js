@@ -139,8 +139,7 @@ function App() {
       <ClassEffect />
       <UserList
         users={users}
-        handleR
-        emove={handleRemove}
+        handleRemove={handleRemove}
         handleToggle={handleToggle}
       />
       <CreateUser
