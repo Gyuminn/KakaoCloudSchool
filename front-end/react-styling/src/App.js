@@ -5,6 +5,7 @@ import "./App.css";
 // import styles from "./App.scss";
 // import classNames from "classnames/bind";
 import Button from "./components/Button";
+import axios from "axios";
 
 // const cx = classNames.bind(styles);
 
@@ -26,18 +27,30 @@ function App() {
       <div>머터리얼 디자인</div> */}
       {/* <StyledComponent /> */}
       <Button
+        // onClick={(e) => {
+        //   let request = new XMLHttpRequest();
+        //   request.open("GET", "https://jsonplaceholder.typicode.com/users");
+        //   // POST 방식일 때는 send에 파라미터를 대입
+        //   request.send("");
+        //   request.addEventListener("load", () => {
+        //     let data = JSON.parse(request.responseText);
+        //     console.log(data);
+        //   });
+        //   request.addEventListener("error", (error) => {
+        //     console.log(error);
+        //   });
+        // }}
+        // onClick={(e) => {
+        //   fetch("https://jsonplaceholder.typicode.com/users")
+        //     .then((response) => response.json())
+        //     .then((data) => console.log(data))
+        //     .catch((error) => console.log(error));
+        // }}
         onClick={(e) => {
-          let request = new XMLHttpRequest();
-          request.open("GET", "https://jsonplaceholder.typicode.com/users");
-          // POST 방식일 때는 send에 파라미터를 대입
-          request.send("");
-          request.addEventListener("load", () => {
-            let data = JSON.parse(request.responseText);
-            console.log(data);
-          });
-          request.addEventListener("error", (error) => {
-            console.log(error);
-          });
+          axios
+            .get("https://jsonplaceholder.typicode.com/users")
+            .then((response) => console.log(response.data))
+            .catch((error) => console.log(error));
         }}
       >
         다운로드
