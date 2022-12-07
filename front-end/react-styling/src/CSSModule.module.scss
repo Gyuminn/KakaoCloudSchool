@@ -1,0 +1,22 @@
+/* 파일 안에서만 사용하는 클래스 */
+.wrapper {
+    background: black;
+    padding: 1em;
+    color: white;
+    font-size: 2rem;
+
+    /* wrapper와 inverted가 모두 있는 경우에만 적용 */
+    &.inverted {
+        color:black;
+        background: white;
+        border: 1px solid black;
+    }
+}
+
+/* 모든 곳에서 사용할 수 있는 클래스 - 이름을 수정하지 않음. */
+:global {
+    .something {
+        font-weight: 800;
+        color:aqua;
+    }
+}

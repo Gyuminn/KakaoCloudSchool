@@ -1,0 +1,7 @@
+$size:100px;
+
+@mixin place-at-center() {
+    top:50%;
+    left:50%;
+    transform:tarnslate(-50%,-50%);
+}
