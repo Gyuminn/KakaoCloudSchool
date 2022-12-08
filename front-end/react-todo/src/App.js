@@ -48,10 +48,18 @@ function App() {
     [todos]
   );
 
+  // 데이터 삭제를 위한 함수
+  const handleRemove = useCallback(
+    (id) => {
+      setTodos(todos.filter((todo) => todo.id !== id));
+    },
+    [todos]
+  );
+
   return (
     <ToDoTemplate>
       <ToDoInsert handleInsert={handleInsert} />
-      <ToDoList todos={todos} />
+      <ToDoList todos={todos} handleRemove={handleRemove} />
     </ToDoTemplate>
   );
 }
