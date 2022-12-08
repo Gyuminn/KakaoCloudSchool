@@ -1,21 +1,12 @@
 import React from "react";
 import { ToDoListItem } from "./ToDoListItem";
 
-export const ToDoList = () => {
+export const ToDoList = ({ todos }) => {
   return (
     <div className="ToDoList">
-      <ToDoListItem />
-      <ToDoListItem />
-      <ToDoListItem />
-      <ToDoListItem />
-      <ToDoListItem />
-      <ToDoListItem />
-      <ToDoListItem />
-      <ToDoListItem />
-      <ToDoListItem />
-      <ToDoListItem />
-      <ToDoListItem />
-      <ToDoListItem />
+      {todos.map((todo) => (
+        <ToDoListItem todo={todo} key={todo.id} />
+      ))}
     </div>
   );
 };
