@@ -9,7 +9,7 @@ import "./ToDoListItem.scss";
 
 import React, { useCallback } from "react";
 
-const ToDoListItem = ({ todo, handleRemove, handleToggle }) => {
+const ToDoListItem = ({ todo, handleRemove, handleToggle, style }) => {
   const { id, text, checked } = todo;
 
   const handleDelete = useCallback(
@@ -23,16 +23,18 @@ const ToDoListItem = ({ todo, handleRemove, handleToggle }) => {
   );
 
   return (
-    <div className="ToDoListItem">
-      <div
-        className={cn("checkbox", { checked })}
-        onClick={(e) => handleToggle(id)}
-      >
-        {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
-        <div className="text">{text}</div>
-      </div>
-      <div className="remove" onClick={handleDelete}>
-        <MdRemoveCircleOutline />
+    <div className="ToDoListItem-virtualized" style={style}>
+      <div className="ToDoListItem">
+        <div
+          className={cn("checkbox", { checked })}
+          onClick={(e) => handleToggle(id)}
+        >
+          {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
+          <div className="text">{text}</div>
+        </div>
+        <div className="remove" onClick={handleDelete}>
+          <MdRemoveCircleOutline />
+        </div>
       </div>
     </div>
   );
