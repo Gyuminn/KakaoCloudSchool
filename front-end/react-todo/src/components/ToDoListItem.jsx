@@ -9,7 +9,7 @@ import "./ToDoListItem.scss";
 
 import React, { useCallback } from "react";
 
-export const ToDoListItem = ({ todo, handleRemove, handleToggle }) => {
+const ToDoListItem = ({ todo, handleRemove, handleToggle }) => {
   const { id, text, checked } = todo;
 
   const handleDelete = useCallback(
@@ -31,9 +31,11 @@ export const ToDoListItem = ({ todo, handleRemove, handleToggle }) => {
         {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
         <div className="text">{text}</div>
       </div>
-      <div className="remove" onClick={(e) => handleDelete(e)}>
+      <div className="remove" onClick={handleDelete}>
         <MdRemoveCircleOutline />
       </div>
     </div>
   );
 };
+
+export default React.memo(ToDoListItem);
