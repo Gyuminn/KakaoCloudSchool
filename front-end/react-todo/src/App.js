@@ -1,13 +1,13 @@
 import "./App.css";
 import { ToDoInsert } from "./components/ToDoInsert";
-import { ToDoListItem } from "./components/ToDoListItem";
+import { ToDoList } from "./components/ToDoList";
 import { ToDoTemplate } from "./components/ToDoTemplate";
 
 function App() {
   return (
     <ToDoTemplate>
       <ToDoInsert />
-      <ToDoListItem />
+      <ToDoList />
     </ToDoTemplate>
   );
 }
