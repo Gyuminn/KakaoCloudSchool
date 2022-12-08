@@ -56,10 +56,29 @@ function App() {
     [todos]
   );
 
+  // 데이터 수정을 위한 함수
+  const handleToggle = useCallback(
+    (id) => {
+      // todos를 복제해서 하나씩 순회하면서
+      // todo의 id값과 매개변수로 받은 id가 일치하면
+      // checked를 반전하고 그렇지 않으면 그대로
+      setTodos(
+        todos.map((todo) =>
+          todo.id === id ? { ...todo, checked: !todo.checked } : todo
+        )
+      );
+    },
+    [todos]
+  );
+
   return (
     <ToDoTemplate>
       <ToDoInsert handleInsert={handleInsert} />
-      <ToDoList todos={todos} handleRemove={handleRemove} />
+      <ToDoList
+        todos={todos}
+        handleRemove={handleRemove}
+        handleToggle={handleToggle}
+      />
     </ToDoTemplate>
   );
 }
