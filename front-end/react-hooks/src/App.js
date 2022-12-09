@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useMemo, useRef, useState } from "react";
 import Average from "./Average";
 import CreateUser from "./CreateUser";
+import ImmerPractice from "./ImmerPractice";
 import { InputSample } from "./InputSample";
 import UserList from "./UserList";
 
@@ -162,6 +163,7 @@ function App() {
       />
       <div>활성화된 유저 수 : {count}</div>
       <Average />
+      <ImmerPractice />
     </>
   );
 }
