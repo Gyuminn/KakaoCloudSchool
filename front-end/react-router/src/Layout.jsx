@@ -1,11 +1,23 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const Layout = () => {
+  const navigate = useNavigate();
+
+  // 뒤로 이동하는 함수
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  // articles로 이동
+  const goArticlse = () => {
+    navigate("/articles");
+  };
   return (
     <div>
       <header style={{ background: "lightgray", padding: 16, fontsize: 24 }}>
-        Header
+        <button onClick={goBack}>뒤로</button>
+        <button onClick={goArticlse}>게시글</button>
       </header>
       <main>
         <Outlet />
