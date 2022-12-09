@@ -1,10 +1,18 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import qs from "qs";
 
 const About = () => {
   // query string을 읽을 수 있는 Hook
   const location = useLocation();
-  console.log(location);
+
+  const queryString = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
+
+  console.log(`location`, location);
+  console.log(`query string`, queryString);
+
   return (
     <div>
       <h1>React Router 실습</h1>

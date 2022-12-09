@@ -18,6 +18,9 @@ const Home = () => {
         <li>
           <Link to="/profile/void">모르는 유저</Link>
         </li>
+        <li>
+          <Link to="/articles">게시물</Link>
+        </li>
       </ul>
     </div>
   );
