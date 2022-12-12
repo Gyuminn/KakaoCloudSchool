@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { changeInput, insert, toggle, remove } from "../modules/todos";
-import ToDos from "../components/Todos";
+import ToDos from "../components/ToDos";
 
 const ToDosContainer = ({
   input,
