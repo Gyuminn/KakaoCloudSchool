@@ -1,0 +1,24 @@
+{
+    "posts":[
+        {
+            "id":1,
+            "content":"리액트",
+            "done":true
+        },
+        {
+            "id":2,
+            "content":"Node",
+            "done":true
+        },
+        {
+            "id":3,
+            "content":"Java",
+            "done":true
+        },
+        {
+            "id":4,
+            "content":"Spring",
+            "done":true
+        }
+    ]
+}

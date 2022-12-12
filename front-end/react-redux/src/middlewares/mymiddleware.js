@@ -6,7 +6,7 @@ const mymiddleware = (store) => (next) => (action) => {
   const result = next(action);
 
   // 작업이 끝나고 난 후 확인
-  console.log(result);
+  console.log(store.getState());
 
   return result;
 };
