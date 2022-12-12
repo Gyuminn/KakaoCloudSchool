@@ -3,13 +3,22 @@ import React from "react";
 // 한 개의 ToDo를 출력하기 위한 컴포넌트
 const ToDoItem = ({ todo, onToggle, onRemove }) => {
   return (
-    <>
-      <li>
-        <input type="checkbox" />
-        <span>todo</span>
-        <button>삭제</button>
-      </li>
-    </>
+    <div>
+      <input
+        type="checkbox"
+        onClick={() => onToggle(todo.id)}
+        checked={todo.done}
+        readOnly={true}
+      />
+      <span
+        style={{
+          textDecoration: todo.done ? "line-through" : "none",
+        }}
+      >
+        {todo.text}
+      </span>
+      <button onClick={() => onRemove(todo.id)}>삭제</button>
+    </div>
   );
 };
 
@@ -24,20 +33,27 @@ const ToDos = ({
 }) => {
   const onSubmit = (e) => {
     e.preventDefault();
+    onInsert(input);
+    onChangeInput("");
   };
+
+  const onChange = (e) => onChangeInput(e.target.value);
 
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <input />
+        <input value={input} onChange={onChange} />
         <button type="submit">등록</button>
       </form>
       <div>
-        <ToDoItem />
-        <ToDoItem />
-        <ToDoItem />
-        <ToDoItem />
-        <ToDoItem />
+        {todos.map((todo) => (
+          <ToDoItem
+            todo={todo}
+            key={todo.id}
+            onToggle={onToggle}
+            onRemove={onRemove}
+          />
+        ))}
       </div>
     </div>
   );

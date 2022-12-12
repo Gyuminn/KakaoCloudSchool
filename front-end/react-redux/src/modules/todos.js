@@ -54,7 +54,7 @@ const todos = (state = initialState, action) => {
     case TOGGLE:
       return {
         ...state,
-        todos: todos.map((todo) =>
+        todos: state.todos.map((todo) =>
           todo.id === action.id
             ? {
                 ...todo,
