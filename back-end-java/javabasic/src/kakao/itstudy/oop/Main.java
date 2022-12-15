@@ -50,7 +50,7 @@ public class Main {
         MethodClass.twoArgsMethod(2, "Message");
 
         MethodClass obj = new MethodClass();
-        int result = obj.addWithInteger(10,30);
+        int result = obj.addWithInteger(10, 30);
         System.out.println(result);
         result = obj.addWithInteger(result, 90);
         System.out.println(result);
@@ -60,7 +60,7 @@ public class Main {
         // 기본형을 메서드에게 넘겨준 경우는 데이터가 변경되지 않음.
         System.out.println("x:" + x);
 
-        int [] br = {10, 20, 30};
+        int[] br = {10, 20, 30};
         MethodClass.callByReference(br);
         // 배열을 메서드에게 넘기면 배열의 내용이 변경될 수도 있음.
         // 메서드의 리턴이 없는 경우라면 print 메서드를 제외하고는
@@ -74,8 +74,11 @@ public class Main {
         int f = MethodClass.noRecursionFibonacci(50);
         System.out.println("f:" + f);
 
-        int f2 = MethodClass.recursionFibonacci(50);
+        int f2 = MethodClass.recursionFibonacci(5);
         System.out.println("f2:" + f2);
+
+        MethodClass.display("김규민");
+        MethodClass.display("gyumin", "Gyuminn", "q.min");
     }
 }
 

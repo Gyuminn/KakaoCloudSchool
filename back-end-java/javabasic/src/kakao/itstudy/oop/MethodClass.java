@@ -99,4 +99,11 @@ public class MethodClass {
         }
         return recursionFibonacci(n - 1) + recursionFibonacci(n - 2);
     }
+
+    // 매개변수의 개수를 가변으로 설정
+    public static void display(String... args) {
+        for (String temp : args) {
+            System.out.println(temp);
+        }
+    }
 }
