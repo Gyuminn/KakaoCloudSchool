@@ -7,10 +7,13 @@ public class StarcraftMain {
         star.attack();
 
         // Zerg 공격 호출
-        star= new Zerg();
+        star = new Zerg();
         star.attack();
 
-        star = new Terran();
-        star.attack();
+        // 추상 클래스는 인스턴스 생성을 할 수 없기 때문에
+        // new를 할 수 없어서 에러
+        // star = new Starcraft();
+        // star.attack();
+
     }
 }
