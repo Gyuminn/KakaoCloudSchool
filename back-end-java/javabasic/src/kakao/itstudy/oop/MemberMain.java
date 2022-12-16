@@ -2,7 +2,7 @@ package kakao.itstudy.oop;
 
 import java.util.Date;
 
-public class ConstructorMain {
+public class MemberMain {
     public static void main(String[] args) {
         String[] nicknames = {"qmin", "Gyuminn"};
 
