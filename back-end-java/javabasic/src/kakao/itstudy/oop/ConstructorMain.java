@@ -5,7 +5,7 @@ import java.util.Date;
 public class ConstructorMain {
     public static void main(String[] args) {
         String[] nicknames = {"qmin", "Gyuminn"};
-        /*
+
         // 인스턴스 생성
         Member member = new Member();
         member.setEmail("gyumin@gmail.com");
@@ -17,7 +17,7 @@ public class ConstructorMain {
         member.setBirthday(new Date(97, 0, 29));
         member.setNicknames(nicknames);
         System.out.println(member);
-        */
+
 
         Member member1 = new Member("gyumin@gmail.com", "1234", nicknames, new Date(97, 0, 29), false, 26);
         System.out.println(member1);

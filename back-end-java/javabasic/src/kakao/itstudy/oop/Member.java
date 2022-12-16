@@ -11,6 +11,13 @@ public class Member {
     private boolean married;
     private int age;
 
+    // 매개변수가 없는 생성자 - Default Constructor
+    // 기본적으로 제공되지만 생성자를 만들면 없어진다.
+    public Member() {
+        super();
+    }
+
+    // 모든 속성을 매개변수로 받아서 초기화해주는 생성자
     public Member(String email, String password, String[] nicknames, Date birthday, boolean married, int age) {
         this.email = email;
         this.password = password;
