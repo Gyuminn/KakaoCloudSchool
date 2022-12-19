@@ -57,5 +57,8 @@ public class Main {
         System.out.println(row1.getNum());
         Table row2 = new Table();
         System.out.println(row2.getNum());
+        Table.setStep(10);
+        Table row3 = new Table();
+        System.out.println(row3.getNum());
     }
 }
