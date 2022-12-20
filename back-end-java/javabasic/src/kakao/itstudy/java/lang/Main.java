@@ -1,9 +1,9 @@
 package kakao.itstudy.java.lang;
-
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedEncodingException {
         String[] names = {"gyumin", "Gyuminn", "gimgyumin"};
         // 인스턴스 생성
         Data original = new Data(1, "itstudy", names);
@@ -72,5 +72,29 @@ public class Main {
         sb.append("Java");
         // 해시코드가 이전 데이터와 동일
         System.out.println(System.identityHashCode(sb));
+
+        // 여러 데이터를 가지고 하나의 문자열을 생성
+        double lat = 12.789;
+        double lng = 24.2987;
+        // 위의 데이터를 가지고 위도:12.789, 경도:24.299 문자열로 생성
+        String msg = String.format("위도:%.3f 경도:%.3f\n", lat, lng);
+        System.out.println(msg);
+
+        String hello = "안녕하세요";
+        // 바이트 배열로 문자열을 변환
+        try {
+            // 바이트 배열로 문자열을 변환 - MS949 이용
+            // 동일한 프로그램이 아닌 시스템과 채팅을 할 때는
+            // 문자열을 직접 전송하지 않고
+            // 바이트 배열을 만들어서 전송
+            byte [] bytes = hello.getBytes("UTF-8");
+
+            // byte 배열을 문자열로 변환
+            String result = new String(bytes, "UTF-8");
+            // 문자열이 깨지면 인코딩 방식을 확인하고 변경을 해야 한다.
+            System.out.println(result);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }
