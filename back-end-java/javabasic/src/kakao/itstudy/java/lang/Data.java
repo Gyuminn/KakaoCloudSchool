@@ -1,6 +1,7 @@
 package kakao.itstudy.java.lang;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 // 하나의 데이터 묶음을 표현하기 위한 클래스 - VO(Value Object)
 public class Data implements Cloneable{
@@ -74,5 +75,24 @@ public class Data implements Cloneable{
         data.setNicknames(nicknames);
 
         return data;
+    }
+
+    // 데이터의 내용이 같은지 확인하는 메서드
+    @Override
+    public boolean equals(Object other) {
+        // boolean result = false;
+        // 원래 자료형으로 변환
+        Data other1 = (Data) other;
+
+        // 숫자나 boolean은 ==로 일치 여부를 판단하지만
+        // 그 이외의 자료형은 equals로 판단
+        // if(this.num == other1.getNum() && this.name.equals(other1.getName())) {
+        //     return true;
+        // }
+
+        // Objects.hash(데이터 나열)을 이용하면
+        // 데이터를 가지고 정수로 만든 해시코드를 생성
+        // 이렇게 만든 해시 코드 값을 리턴하는 것이 속도가 더 빠르다.
+        return (Objects.hash(num, name))== Objects.hash(other1.getNum(), other1.getName());
     }
 }
