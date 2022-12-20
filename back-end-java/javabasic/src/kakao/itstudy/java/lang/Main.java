@@ -5,6 +5,10 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 
 public class Main {
+    enum Gender {
+        MAN, WOMAN
+    }
+
     public static void main(String[] args) throws UnsupportedEncodingException {
         String[] names = {"gyumin", "Gyuminn", "gimgyumin"};
         // 인스턴스 생성
@@ -153,7 +157,18 @@ public class Main {
 
         obj1.disp();
         // 기본형은 Generics에 적용할 수 없다.
-        Generic<Integer> obj2 = new Generic<>(100,200,30);
+        Generic<Integer> obj2 = new Generic<>(100, 200, 30);
         obj2.disp();
+
+        // 옵션 사용을 위해서 예전에는 final 상수를 이용
+        final int MAN = 0;
+        final int WOMAN = 1;
+
+        // int로 만들면 이렇게 정의하지 않은 값을 대입하는게 가능
+        int gender = MAN;
+        gender = 3;
+
+        Gender t = Gender.MAN;
+        System.out.println(t);
     }
 }
