@@ -1,5 +1,6 @@
 package kakao.itstudy.java.lang;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 
@@ -110,6 +111,24 @@ public class Main {
         for (int i = 0; i < 1000000000; i++) {
         }
         long end = System.currentTimeMillis();
-        System.out.println((end-start) + "밀리 초");
+        System.out.println((end - start) + "밀리 초");
+
+        // Runtime 클래스의 인스턴스 생성
+        // document에 생성자가 안보인다고 못만드는 것이 아니다.
+        // Singleton 패턴으로 디자인되어서 해시코드가 동일
+        Runtime r1 = Runtime.getRuntime();
+        Runtime r2 = Runtime.getRuntime();
+        System.out.println(System.identityHashCode(r1));
+        System.out.println(System.identityHashCode(r2));
+        // 프로세스 실행
+        // Mac은 open 파일 경로 형태로 입력해야 함. 관리자 권한 문제도 있을 수 있음.
+        // Windows는 프로세스 이름만 사용하면 된다.
+        /*
+        try {
+            r1.exec("notepad");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        */
     }
 }
