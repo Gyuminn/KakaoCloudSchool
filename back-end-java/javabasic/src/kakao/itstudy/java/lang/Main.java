@@ -130,5 +130,21 @@ public class Main {
             throw new RuntimeException(e);
         }
         */
+
+        // 기본값인 0을 가지고 1000000 개의 데이터를 가진 배열 생성
+        int[] ar = new int[1000000];
+        long startTime = System.currentTimeMillis();
+        // 약 2.2초
+        /*
+        for (int i = 0; i < ar.length; i++) {
+            System.out.println(ar[i]);
+        }
+        */
+        // 빠른 열거 - 체감상 비슷하긴한데 더 빠르다고 함.
+        for (int temp : ar) {
+            System.out.println(temp);
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println((endTime - startTime) + "밀리초");
     }
 }
