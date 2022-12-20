@@ -1,4 +1,5 @@
 package kakao.itstudy.java.lang;
+
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 
@@ -87,7 +88,7 @@ public class Main {
             // 동일한 프로그램이 아닌 시스템과 채팅을 할 때는
             // 문자열을 직접 전송하지 않고
             // 바이트 배열을 만들어서 전송
-            byte [] bytes = hello.getBytes("UTF-8");
+            byte[] bytes = hello.getBytes("UTF-8");
 
             // byte 배열을 문자열로 변환
             String result = new String(bytes, "UTF-8");
@@ -96,5 +97,19 @@ public class Main {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+
+        // 운영체제 이름 가져오기
+        String os = System.getProperty("os.name");
+        // 자바 버전 확인
+        String version = System.getProperty("java.version");
+        System.out.println(os);
+        System.out.println(version);
+
+        // 코드의 수행 시간 측정
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1000000000; i++) {
+        }
+        long end = System.currentTimeMillis();
+        System.out.println((end-start) + "밀리 초");
     }
 }
