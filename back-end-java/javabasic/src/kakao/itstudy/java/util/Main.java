@@ -106,5 +106,26 @@ public class Main {
         }
         end = System.currentTimeMillis();
         System.out.println("LinkedList 중간 삽입 시간: " + (end - start) + "ms");
+
+        List <String> list = new ArrayList<>();
+        list.add("천규민");
+        list.add("김규민");
+        list.add("박규민");
+        list.add("나규민");
+        list.add("이규민");
+
+        // 순회
+        for(String temp:list) {
+            System.out.println(temp);
+        }
+
+        // 데이터 정렬
+        list.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        System.out.println(list);
     }
 }
