@@ -227,6 +227,7 @@ public class Main {
         sc.close();
          */
 
+        /*
         // Set을 이용해서 구현
         // 입력받기 위한 인스턴스 생성
         Scanner sc = new Scanner(System.in);
@@ -258,5 +259,31 @@ public class Main {
 
         // 스캐너 정리
         sc.close();
+
+         */
+
+        // Map의 활용
+        // 데이터의 종류가 1가지라면 Object 대신에 그 자료형을 기재해도 된다.
+        Map <String, Object> map = new HashMap<>();
+
+        // 데이터 추가
+        map.put("name", "gyumin");
+        // 데이터 가져오기
+        System.out.println(map.get("name"));
+        // 중복된 키를 이용한 데이터 삽입 - 수정
+        map.put("name", "kimgyumin");
+        System.out.println(map.get("name"));
+        // 없는 키를 이용해서 가져왔을 때 자바는 null
+        System.out.println(map.get("num"));
+
+        // Value를 Object로 설정했을 때 사용
+        // Value를 삽입할 때 String이지만
+        // Map을 만들 때 Value의 type을 Object로 설정했기 때문에
+        // get을 해서 데이터를 원상 복구하고자 하면 강제 형 변환을 해야한다.
+        String value = (String)map.get("name");
+
+        // 모든 키를 가져오는 것
+        Set <String> keys = map.keySet();
+        System.out.println(keys);
     }
 }
