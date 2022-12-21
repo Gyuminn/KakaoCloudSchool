@@ -165,11 +165,11 @@ public class Main {
 
 
         /**
-         * [] 로또 번호 생성기 만들기
-         * [] 1-45까지의 숫자 6개를 입력받아서 저장한 후 출력
-         * [] 입력을 받을 때 1 ~ 45 사이의 숫자가 아니면 다시 입력하도록
-         * [] 중복되는 숫자를 입력하면 다시 입력하도록 한다.
-         * [] 데이터를 출력할 때는 정렬을 해서 출력
+         * [o] 로또 번호 생성기 만들기
+         * [o] 1-45까지의 숫자 6개를 입력받아서 저장한 후 출력
+         * [o] 입력을 받을 때 1 ~ 45 사이의 숫자가 아니면 다시 입력하도록
+         * [o] 중복되는 숫자를 입력하면 다시 입력하도록 한다.
+         * [o] 데이터를 출력할 때는 정렬을 해서 출력
          */
 
         // 숫자 6개를 저장할 공간을 생성
@@ -177,6 +177,7 @@ public class Main {
 
         // 배열을 이용하는 경우
         // 입력받기 위한 인스턴스 생성
+        /*
         Scanner sc = new Scanner(System.in);
         // 6개의 정수를 저장할 배열을 생성
         int[] lotto = new int[6];
@@ -191,6 +192,7 @@ public class Main {
                 if (lotto[i] < 1 || lotto[i] > 45) {
                     System.out.println("1-45 사이의 숫자만 입력하세요!!");
                     i--;
+                    continue;
                 }
 
                 // 데이터 중복 검사
@@ -217,8 +219,43 @@ public class Main {
             }
 
         }
+        // 배열의 데이터 정렬
+        Arrays.sort(lotto);
         // 배열의 데이터를 출력
         System.out.println(Arrays.toString(lotto));
+        // 스캐너 정리
+        sc.close();
+         */
+
+        // Set을 이용해서 구현
+        // 입력받기 위한 인스턴스 생성
+        Scanner sc = new Scanner(System.in);
+
+        // 중복된 데이터를 저장하지 않고 데이터를 정렬해서 저장하는
+        // 자료구조 클래스
+        Set<Integer> lottoSet = new TreeSet<>();
+        // set에 6개의 데이터가 저장되지 않은 경우
+        while(lottoSet.size() < 6) {
+            System.out.println("로또 번호 입력: ");
+            int temp = sc.nextInt();
+            if(temp < 1 || temp > 45) {
+                System.out.println("1부터 45사이의 숫자를 입력하세요");
+                continue;
+            }
+
+            // 중복 검사
+            boolean result = lottoSet.add(temp);
+            // 삽입에 실패하면 - 중복된 데이터라면
+            if(result == false) {
+                System.out.println("중복된 숫자를 입력하였습니다.");
+            }
+        }
+        System.out.println(lottoSet);
+
+        // 배열로 사용 하고 싶지만 단순 형변환같은 아래의 방법은 에러 발생
+        // Integer[] lottoArr = (Integer[])lottoSet.toArray();
+        // System.out.println(Arrays.toString(lottoArr));
+
         // 스캐너 정리
         sc.close();
     }
