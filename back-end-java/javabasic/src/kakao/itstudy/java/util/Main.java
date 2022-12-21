@@ -50,5 +50,13 @@ public class Main {
             }
         });
         System.out.println(Arrays.toString(copy));
+
+        int[] nums = {30, 20, 50, 10, 40};
+        // 정렬을 수행하지 않고 하면 논리적인 오류가 발생
+        System.out.println(Arrays.binarySearch(nums, 20));
+        Arrays.sort(nums);
+        System.out.println(Arrays.binarySearch(nums, 20));
+        // sort가 된 상태이므로 0이 아니고 2
+        System.out.println(Arrays.binarySearch(nums, 30));
     }
 }
