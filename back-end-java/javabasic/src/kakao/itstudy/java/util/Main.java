@@ -1,7 +1,6 @@
 package kakao.itstudy.java.util;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -58,5 +57,54 @@ public class Main {
         System.out.println(Arrays.binarySearch(nums, 20));
         // sort가 된 상태이므로 0이 아니고 2
         System.out.println(Arrays.binarySearch(nums, 30));
+
+        // 정수를 저장하기 위한 ArrayList
+        List<Integer> al = new ArrayList<>();
+        // 정수를 저장하기 위한 LinkedList
+        List<Integer> li = new LinkedList<>();
+
+        for (int i = 0; i < 100000; i++) {
+            al.add(i);
+            li.add(i);
+        }
+
+        long start;
+        long end;
+        start = System.currentTimeMillis();
+        for(int i = 0; i<100000; i++) {
+            Integer integer = al.get(i);
+        }
+        end = System.currentTimeMillis();
+        System.out.println("ArrayList 조회 시간: " + (end - start) + "ms");
+
+        start = System.currentTimeMillis();
+        for(int i = 0; i<100000; i++) {
+            Integer integer = li.get(i);
+        }
+        end = System.currentTimeMillis();
+        System.out.println("LinkedList 조회 시간: " + (end - start) + "ms");
+
+        List<Integer> al2 = new ArrayList<>();
+        List<Integer> li2 = new LinkedList<>();
+
+        al2.add(1);
+        al2.add(3);
+
+        li2.add(1);
+        li2.add(3);
+
+        start = System.currentTimeMillis();
+        for(int i = 0; i<100000; i++) {
+            al2.add(1,2);
+        }
+        end = System.currentTimeMillis();
+        System.out.println("ArrayList 중간 삽입 시간: " + (end - start) + "ms");
+
+        start = System.currentTimeMillis();
+        for(int i = 0; i<100000; i++) {
+            li2.add(1,2);
+        }
+        end = System.currentTimeMillis();
+        System.out.println("LinkedList 중간 삽입 시간: " + (end - start) + "ms");
     }
 }
