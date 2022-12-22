@@ -1,9 +1,9 @@
 package kakao.itstudy.java.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UtilMain {
     public static void main(String[] args) {
@@ -73,5 +73,25 @@ public class UtilMain {
             }
             System.out.println(x);
         }
+
+        // Calendar로 원하는 날짜를 생성하고 Date로 변환
+        Calendar calendar = new GregorianCalendar(1986, 4, 5);
+        Date date = new Date(calendar.getTimeInMillis());
+        System.out.println(date);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 EEEE a hh:mm:ss");
+        System.out.println(format.format(date));
+
+        // 정규 표현식 객체 사용
+        // 문자열 배열에서 a로 시작하고 c로 끝나는 3글자 조회
+        String[] ar = {"abc", "asc", "aiic"};
+        // 정규식 생성 - a로 시작하고 아무 글자나 하나 있고 c로 끝나는
+        Pattern p = Pattern.compile("^a.c$");
+        for(String str: ar) {
+            // 정규식 패턴과 일치하는지 조사
+            Matcher mather = p.matcher(str);
+            System.out.println(str + ":" + mather.find());
+        }
+
     }
 }
