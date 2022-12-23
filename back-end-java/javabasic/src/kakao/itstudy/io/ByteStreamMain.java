@@ -1,7 +1,10 @@
 package kakao.itstudy.io;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.nio.Buffer;
 import java.util.Arrays;
 
 public class ByteStreamMain {
@@ -20,6 +23,7 @@ public class ByteStreamMain {
         }
         */
 
+        /*
         try (FileInputStream fis = new FileInputStream("/Users/gimgyumin/Documents/kakaoCloudSchool/back-end-java/javabasic/sample.txt")) {
             while(true) {
                 // 읽을 수 있는 크기로 바이트 배열 생성
@@ -34,6 +38,31 @@ public class ByteStreamMain {
                     // 문자열로 변환해서 출력
                     System.out.println(new String(b));
                 }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        */
+
+        // 버퍼 단위로 기록
+        try (PrintStream ps = new PrintStream(new FileOutputStream("./sample2.txt", true))) {
+            String msg = "Hello Stream";
+            // write는 바이트 단위 기록
+            ps.write(msg.getBytes());
+            // print는 문자열을 스스로 바이트로 변환해서 기록
+            ps.print(msg);
+            ps.flush();
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream("/Users/gimgyumin/Documents/kakaoCloudSchool/back-end-java/javabasic/sample2.txt"))) {
+            // 파일에서 읽을 수 있는 크기로 바이트 배열을 생성
+            byte[] b = new byte[bis.available()];
+            while (bis.read(b) > 0) {
+                System.out.println(Arrays.toString(b));
+                // 문자열롭 변환
+                System.out.println(new String(b));
             }
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
