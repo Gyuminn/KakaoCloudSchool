@@ -46,7 +46,7 @@ public class ByteStreamMain {
 
         // 버퍼 단위로 기록
         try (PrintStream ps = new PrintStream(new FileOutputStream("./sample2.txt", true))) {
-            String msg = "Hello Stream";
+            String msg = "안녕하세요 반갑습니다. 김규민입니다.";
             // write는 바이트 단위 기록
             ps.write(msg.getBytes());
             // print는 문자열을 스스로 바이트로 변환해서 기록
@@ -57,12 +57,21 @@ public class ByteStreamMain {
         }
 
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream("/Users/gimgyumin/Documents/kakaoCloudSchool/back-end-java/javabasic/sample2.txt"))) {
-            // 파일에서 읽을 수 있는 크기로 바이트 배열을 생성
-            byte[] b = new byte[bis.available()];
-            while (bis.read(b) > 0) {
-                System.out.println(Arrays.toString(b));
-                // 문자열롭 변환
-                System.out.println(new String(b));
+            // 파일의 용량이 크면 한 번에 받아오면 터질 수 있다.
+            // 나누어서 읽기 - 웹에서 파일 다운로드 받을 떄 사용
+            while (true) {
+                // 16바이트 단위로 읽어오기
+                // 일반적으로 128 또는 128의 배수를 많이 이용
+                byte[] b = new byte[1024];
+                int len = bis.read(b, 0, b.length);
+                if (len < 0) {
+                    break;
+                }
+
+                // 받을 내용을 가지고 작업
+                // 다운로드라면 파일에 기록
+                // 문자열이라면 하나로 모아서 읽어야 함.
+                System.out.println((new String(b)).trim());
             }
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
