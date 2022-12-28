@@ -55,6 +55,7 @@ public class GoodDAOImpl implements GoodDAO {
     }
 
     // goods 테이블의 전체 데이터 가져오기
+    @Override
     public List<Good> getAll() {
         // List는 조회할 데이터가 없더라도 인스턴스를 생성
         // 조회할 데이터가 없다는 사실은 size()가 0이다.
@@ -85,12 +86,13 @@ public class GoodDAOImpl implements GoodDAO {
     }
 
     // goods 테이블에서 code를 가지고 데이터를 조회하기
+    @Override
     public Good getGood(String code) {
         // 조회가 안된 경우는 null
         Good good = null;
         try {
             pstmt = connection.prepareStatement(
-               "select * from goods where code = ?"
+                    "select * from goods where code = ?"
             );
             // ? 에 바인딩
             // ? 에 바인딩할 때 인덱스는 1부터 시작
@@ -98,7 +100,7 @@ public class GoodDAOImpl implements GoodDAO {
 
             rs = pstmt.executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 good = new Good();
 
                 good.setCode(rs.getString("code"));
@@ -106,10 +108,39 @@ public class GoodDAOImpl implements GoodDAO {
                 good.setManufacture(rs.getString("manufacture"));
                 good.setPrice(rs.getInt("price"));
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
             e.printStackTrace();
         }
         return good;
+    }
+
+    @Override
+    public int insertGood(Good good) {
+        int result = 0;
+        // 삽입 작업이므로 트랜잭션을 고려
+        try {
+            connection.setAutoCommit(false);
+
+            pstmt = connection.prepareStatement("insert into goods values(?, ?, ?, ?)");
+            pstmt.setString(1, good.getCode());
+            pstmt.setString(2, good.getName());
+            pstmt.setString(3, good.getManufacture());
+            pstmt.setInt(4, good.getPrice());
+
+            result = pstmt.executeUpdate();
+
+            connection.commit();
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+            try {
+                connection.rollback();
+            } catch (Exception e2) {
+            }
+
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }
