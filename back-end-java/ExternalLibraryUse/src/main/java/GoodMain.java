@@ -21,5 +21,7 @@ public class GoodMain {
         } else {
             System.out.println("삽입 실패");
         }
+
+        System.out.println(dao.likeGood("한"));
     }
 }

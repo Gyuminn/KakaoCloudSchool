@@ -143,4 +143,31 @@ public class GoodDAOImpl implements GoodDAO {
 
         return result;
     }
+
+    @Override
+    public List<Good> likeGood(String content) {
+        List<Good> list = new ArrayList<Good>();
+
+        try {
+            pstmt = connection.prepareStatement("select * from goods where name like ? or manufacture like ?");
+            pstmt.setString(1, "%" + content + "%");
+            pstmt.setString(2, "%" + content + "%");
+
+            rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                Good good = new Good();
+                good.setCode(rs.getString("code"));
+                good.setName(rs.getString("name"));
+                good.setManufacture(rs.getString("manufacture"));
+                good.setPrice(rs.getInt("price"));
+
+                list.add(good);
+            }
+        }catch(Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+
+        return list;
+    }
 }
