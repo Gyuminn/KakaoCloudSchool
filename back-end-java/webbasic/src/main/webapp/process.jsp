@@ -23,5 +23,8 @@
   System.out.println("처리페이지");
 
   // 포워딩
-  request.getRequestDispatcher("output.jsp").forward(request, response);
+  // request.getRequestDispatcher("output.jsp").forward(request, response);
+
+  // 리다이렉트
+  response.sendRedirect("output.jsp");
 %>
