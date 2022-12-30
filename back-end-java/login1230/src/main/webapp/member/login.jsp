@@ -22,6 +22,7 @@
   <form method="post">
     아이디<input type="text" name="mid" /><br />
     비밀번호<input type="password" name="mpw" /><br />
+    자동로그인<input type="checkbox" name="auto" /><br />
     <input type="submit" value="로그인" />
   </form>
 </body>

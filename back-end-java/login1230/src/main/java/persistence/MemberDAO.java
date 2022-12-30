@@ -61,7 +61,7 @@ public class MemberDAO {
             // SQL 실행
             rs = pstmt.executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 vo = new MemberVO();
                 // 비밀번호는 세션에 저장할 필요없기 때문에 제외한다.
                 vo.setMid(rs.getString("mid"));
@@ -72,5 +72,45 @@ public class MemberDAO {
             e.printStackTrace();
         }
         return vo;
+    }
+
+    // uuid를 가지고 로그인하는 메서드
+    public MemberVO login(String uuid) {
+        MemberVO vo = null;
+        try {
+            String sql = "select * from tbl_member where uuid=?";
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, uuid);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                vo = new MemberVO();
+                vo.setMid(rs.getString("mid"));
+                vo.setMname(rs.getString("mname"));
+
+            }
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+        return vo;
+    }
+
+    // uuid를 업데이트 하는 메서드: 로그인 성공 시 호출되는 메서드
+    public void updateUUID(String mid, String uuid) {
+        try {
+            String query = "update tbl_member set uuid=? "
+                    + "where mid=?";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, uuid);
+            pstmt.setString(2, mid);
+
+            pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
+        }
     }
 }

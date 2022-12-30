@@ -4,6 +4,7 @@ import service.MemberService;
 import service.MemberServiceImpl;
 
 public class TestCase {
+    /*
     @Test
     public void daoTest() {
         MemberDAO dao = MemberDAO.getInstance();
@@ -18,4 +19,6 @@ public class TestCase {
         System.out.println(service.login("rhkdtlrtm12", "1111"));
         System.out.println(service.login("rhkdtlrtm13", "1111"));
     }
+
+     */
 }
