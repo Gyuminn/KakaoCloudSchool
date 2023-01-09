@@ -1,6 +1,8 @@
 package com.kakao.springboot0109;
 
 import com.kakao.springboot0109.dto.ParamDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.tags.Param;
 
@@ -56,7 +58,18 @@ public class JSONController {
     }
 
     @PutMapping("/param")
-    public String getPutParam(@RequestBody ParamDTO paramDTO){
+    public String getPutParam(@RequestBody ParamDTO paramDTO) {
         return paramDTO.toString();
+    }
+
+    @PutMapping("/param1")
+    public ParamDTO getPutParam1(@RequestBody ParamDTO paramDTO) {
+        return paramDTO;
+    }
+
+    @PutMapping("/param2")
+    public ResponseEntity<ParamDTO> getPutParam2(@RequestBody ParamDTO paramDTO) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body(paramDTO);
     }
 }
