@@ -88,5 +88,4 @@ public class JSONController {
     public String deleteParamNum(@RequestParam("num") int num) {
         return num + "";
     }
-
 }
