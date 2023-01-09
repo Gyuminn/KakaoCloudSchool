@@ -1,6 +1,8 @@
 package com.kakao.springboot0109;
 
 import com.kakao.springboot0109.dto.ParamDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 // 공통된 URL
 @RequestMapping("/api/v1/rest-api")
 public class JSONController {
+    // 로깅 가능한 객체를 생성
+    private final Logger LOGGER = LoggerFactory.getLogger(JSONController.class);
+
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String getHello() {
+        LOGGER.info("hello 요청이 왔습니다. 2");
         return "GET Hello";
     }
 
@@ -72,4 +78,15 @@ public class JSONController {
         return ResponseEntity.status(HttpStatus.ACCEPTED)
                 .body(paramDTO);
     }
+
+    @DeleteMapping("/product/{num}")
+    public String deleteNum(@PathVariable("num") int num) {
+        return num + "";
+    }
+
+    @DeleteMapping("/product")
+    public String deleteParamNum(@RequestParam("num") int num) {
+        return num + "";
+    }
+
 }
