@@ -2,6 +2,7 @@ package com.kakao.springbootjpa0110;
 
 import com.kakao.springbootjpa0110.domain.Memo;
 import com.kakao.springbootjpa0110.persistence.MemoRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,7 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -34,7 +37,7 @@ public class RepositoryTest {
     @Test
     public void testAll() {
         List<Memo> list = memoRepository.findAll();
-        for(Memo memo: list) {
+        for (Memo memo : list) {
             System.out.println(memo);
         }
     }
@@ -45,7 +48,7 @@ public class RepositoryTest {
         // 그럴 때는 Optional을 사용해야 한다.
         Optional<Memo> result = memoRepository.findById(1000L);
 
-        if(result.isPresent()) {
+        if (result.isPresent()) {
             System.out.println(result.get());
         } else {
             System.out.println("데이터가 존재하지 않습니다.");
@@ -82,7 +85,7 @@ public class RepositoryTest {
         System.out.println(result.getTotalPages());
 
         // 조회된 데이터 순회
-        for(Memo memo: result.getContent()) {
+        for (Memo memo : result.getContent()) {
             System.out.println(memo);
         }
     }
@@ -93,7 +96,7 @@ public class RepositoryTest {
         Sort sort = Sort.by("mno").descending();
         Pageable pageable = PageRequest.of(0, 10, sort);
         Page<Memo> result = memoRepository.findAll(pageable);
-        for(Memo memo : result.getContent()){
+        for (Memo memo : result.getContent()) {
             System.out.println(memo);
         }
     }
@@ -107,7 +110,7 @@ public class RepositoryTest {
 
         Pageable pageable = PageRequest.of(0, 10, sortAll);
         Page<Memo> result = memoRepository.findAll(pageable);
-        for(Memo memo: result.getContent()) {
+        for (Memo memo : result.getContent()) {
             System.out.println(memo);
         }
     }
@@ -116,8 +119,62 @@ public class RepositoryTest {
     public void queryMethod1() {
         List<Memo> list = memoRepository.findByMnoBetweenOrderByMnoDesc(30L, 40L);
 
-        for(Memo memo: list) {
+        for (Memo memo : list) {
             System.out.println(memo);
+        }
+    }
+
+    @Test
+    public void queryMethod2() {
+        Pageable pageable = PageRequest.of(1, 5);
+        Page<Memo> result = memoRepository.findByMnoBetween(0L, 50L, pageable);
+        for (Memo memo : result.getContent()) {
+            System.out.println(memo);
+        }
+    }
+
+    @Test
+    // 특정한 작업에서는 트랜잭션을 적용하지 않으면 예외가 발생
+    @Transactional
+    // 트랜잭션이 적용되면 자동 Commit이 되지 않으므로 Commit을 호출해야 실제 작업이 완성된다.
+    @Commit
+    public void deleteMnoTest() {
+        memoRepository.deleteByMnoLessThan(10L);
+
+        List<Memo> list = memoRepository.findAll();
+        for (Memo memo : list) {
+            System.out.println(memo);
+        }
+    }
+
+    @Test
+    public void testUpdateQuery() {
+        System.out.println(memoRepository.updateMemoText(11L, "문자열 수정"));
+
+        System.out.println(memoRepository.updateMemoText(
+                Memo.builder()
+                        .mno(12L)
+                        .memoText("문자열 수정2").build()
+        ));
+    }
+
+    @Test
+    public void testSelectQuery() {
+        // mno의 내림차순으로 정렬해서 0번 페이지 10개의 데이터를 가져오는 Pageable 객체
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("mno").descending());
+        Page<Memo> result = memoRepository.getListWithQuery(50L, pageable);
+        for(Memo memo: result.getContent()){
+            System.out.println(memo);
+        }
+    }
+
+    @Test
+    public void testObjectQuery() {
+        // mno의 내림차순으로 정렬해서 0번 페이지의 10개의 데이터를 가져오는 Pageable 객체
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("mno").descending());
+        Page<Object[]> result = memoRepository.getObjectWithQuery(50L, pageable);
+        for (Object[] memo : result.getContent()) {
+            System.out.println(Arrays.toString(memo));
         }
     }
 }
