@@ -19,7 +19,7 @@ public class PageRequestDTO {
     public PageRequestDTO() {
         // 기본값 설정 - NoArgsConstructor Annotation은 필요가 없어짐.
         this.page = 1;
-        this.size = 1;
+        this.size = 10;
     }
 
     // Repository에게 전달할 Pageable 객체를 만들어주는 메서드
