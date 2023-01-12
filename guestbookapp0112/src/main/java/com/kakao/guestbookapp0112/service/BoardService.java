@@ -16,6 +16,9 @@ public interface BoardService {
     // 게시글 상세 보기
     BoardDTO get(Long bno);
 
+    // 게시글 번호를 가지고 댓글을 삭제
+    void removeWithReplies(Long bno);
+
     // DTO -> Entity로 변환해주는 메서드
     default Board dtoToEntity(BoardDTO dto) {
         Member member = Member.builder()

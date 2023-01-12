@@ -6,6 +6,8 @@ import com.kakao.guestbookapp0112.dto.BoardDTO;
 import com.kakao.guestbookapp0112.dto.PageRequestDTO;
 import com.kakao.guestbookapp0112.dto.PageResponseDTO;
 import com.kakao.guestbookapp0112.persistence.BoardRepository;
+import com.kakao.guestbookapp0112.persistence.ReplyRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,14 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService{
     private final BoardRepository boardRepository;
+
+    private final ReplyRepository replyRepository;
+    // 2가지가 연쇄적으로 삭제되기 때문에 Transactional을 적용해야 한다.
+    @Transactional
+    public void removeWithReplies(Long bno) {
+        replyRepository.deleteByBno(bno); // 댓글 삭제
+        boardRepository.deleteById(bno); // 게시글 삭제
+    }
 
     public Long register(BoardDTO dto) {
         log.info("Service:" + dto);

@@ -41,4 +41,9 @@ public class ServiceTest {
         BoardDTO boardDTO = boardService.get(bno);
         System.out.println(boardDTO);
     }
+
+    @Test
+    public void testDelete() {
+        boardService.removeWithReplies(100L);
+    }
 }
