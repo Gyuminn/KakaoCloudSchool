@@ -10,7 +10,13 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -28,7 +34,7 @@ public class RepositoryTest {
     @Test
     // 회원 데이터 삽입
     public void insertMember() {
-        for(int i = 1; i <= 100; i++) {
+        for (int i = 1; i <= 100; i++) {
             Member member = Member.builder()
                     .email("user" + i + "@kakao.com")
                     .password("1111")
@@ -41,7 +47,7 @@ public class RepositoryTest {
     @Test
     // 게시글 데이터 삽입
     public void insertBoard() {
-        for(int i = 1; i <= 100; i++) {
+        for (int i = 1; i <= 100; i++) {
             // Member를 만들고 Board를 만들어가야한다.
             Member member = Member.builder()
                     .email("user" + i + "@kakao.com")
@@ -91,5 +97,41 @@ public class RepositoryTest {
         Reply reply = result.get();
         System.out.println(reply);
         System.out.println(reply.getBoard());
+    }
+
+    // Board 데이터를 가져올 때 Writer의 데이터도 가져오기
+    @Test
+    public void joinTest1() {
+        Object result = boardRepository.getBoardWithWriter(100L);
+        System.out.println(result);
+        Object[] ar = (Object[]) result;
+        System.out.println(Arrays.toString(ar));
+
+        Board board = (Board) ar[0];
+        Member member = (Member) ar[1];
+    }
+
+    @Test
+    public void testJoin2() {
+        List<Object[]> result = boardRepository.getBoardWithReply(100L);
+        for (Object[] ar : result) {
+            System.out.println(Arrays.toString(ar));
+        }
+    }
+
+    @Test
+    public void testJoin3() {
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+        Page<Object[]> result = boardRepository.getBoardWithReplyCount(pageable);
+
+        result.get().forEach(row -> {
+            Object[] ar = (Object[]) row;
+            System.out.println(Arrays.toString(ar));
+
+            Board b = (Board) ar[0];
+            Member m = (Member) ar[1];
+            Long c = (Long) ar[2];
+            System.out.println(c);
+        });
     }
 }
