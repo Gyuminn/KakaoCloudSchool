@@ -46,4 +46,14 @@ public class ServiceTest {
     public void testDelete() {
         boardService.removeWithReplies(100L);
     }
+
+    @Test
+    public void testUpdate() {
+        BoardDTO dto = BoardDTO.builder()
+                .bno(99L)
+                .title("제목 업데이트")
+                .content("내용 업데이트")
+                .build();
+        System.out.println(boardService.modify(dto));
+    }
 }

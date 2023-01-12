@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -55,5 +56,27 @@ public class BoardServiceImpl implements BoardService{
         Object result = boardRepository.getBoardByBno(bno);
         Object [] ar  = (Object[]) result;
         return entityToDTO((Board) ar[0], (Member) ar[1], (Long) ar[2]);
+    }
+
+    @Transactional
+    public Long modify(BoardDTO dto) {
+        // JPA에서는 삽입과 수정 메서드가 동일
+        // upsert(있으면 수정 없으면 삽입)를 하고자 하는 경우는 save를 호출하면 되지만
+        // update를 하고자 하면 데이터가 있는지 확인한 후 수행하는 것이 좋다.
+
+        if (dto.getBno() == null) {
+            return 0L;
+        }
+        // 데이터 존재 여부를 확인
+        Optional<Board> board = boardRepository.findById(dto.getBno());
+        // 존재하는 경우
+        if (board.isPresent()) {
+            board.get().changeTitle(dto.getTitle());
+            board.get().changeContent(dto.getContent());
+            boardRepository.save(board.get());
+            return board.get().getBno();
+        } else {
+            return 0L;
+        }
     }
 }

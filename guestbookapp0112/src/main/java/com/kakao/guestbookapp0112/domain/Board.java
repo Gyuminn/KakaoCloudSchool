@@ -21,4 +21,18 @@ public class Board extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     // 처음에는 가져오지 않고 사용을 할 때 가져온다.
     private Member writer;
+
+    // title을 수정하는 메서드
+    public void changeTitle(String title) {
+        if(title == null || title.trim().length() == 0) {
+            this.title = "무제";
+            return;
+        }
+        this.title = title;
+    }
+
+    // content를 수정하는 메서드
+    public void changeContent(String content) {
+        this.content = content;
+    }
 }
