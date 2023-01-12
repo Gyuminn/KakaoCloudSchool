@@ -3,8 +3,19 @@ package com.kakao.guestbookapp0112.service;
 import com.kakao.guestbookapp0112.domain.Board;
 import com.kakao.guestbookapp0112.domain.Member;
 import com.kakao.guestbookapp0112.dto.BoardDTO;
+import com.kakao.guestbookapp0112.dto.PageRequestDTO;
+import com.kakao.guestbookapp0112.dto.PageResponseDTO;
 
 public interface BoardService {
+    // 게시글 등록
+    Long register(BoardDTO dto);
+
+    // 게시글 목록 보기
+    PageResponseDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
+
+    // 게시글 상세 보기
+    BoardDTO get(Long bno);
+
     // DTO -> Entity로 변환해주는 메서드
     default Board dtoToEntity(BoardDTO dto) {
         Member member = Member.builder()
