@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = "writer") // toString을 만들 때 writer의 toString은 호출 안함.
 public class Board extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +18,7 @@ public class Board extends BaseEntity{
 
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    // 처음에는 가져오지 않고 사용을 할 때 가져온다.
     private Member writer;
 }

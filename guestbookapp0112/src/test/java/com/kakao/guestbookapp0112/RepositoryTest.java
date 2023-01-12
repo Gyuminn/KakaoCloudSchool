@@ -6,9 +6,12 @@ import com.kakao.guestbookapp0112.domain.Reply;
 import com.kakao.guestbookapp0112.persistence.BoardRepository;
 import com.kakao.guestbookapp0112.persistence.MemberRepository;
 import com.kakao.guestbookapp0112.persistence.ReplyRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Optional;
 
 @SpringBootTest
 public class RepositoryTest {
@@ -68,5 +71,25 @@ public class RepositoryTest {
                     .build();
             replyRepository.save(reply);
         }
+    }
+
+    @Test
+    @Transactional
+    // 게시글 1개를 가져오는 메서드
+    public void readBoard() {
+        Optional<Board> result = boardRepository.findById(100L);
+        Board board = result.get();
+        System.out.println(board);
+        System.out.println(board.getWriter());
+    }
+
+    @Test
+    // 댓글 1개를 가져오는 메서드
+    @Transactional
+    public void readReply() {
+        Optional<Reply> result = replyRepository.findById(100L);
+        Reply reply = result.get();
+        System.out.println(reply);
+        System.out.println(reply.getBoard());
     }
 }
