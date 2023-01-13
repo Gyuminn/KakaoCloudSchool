@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -42,5 +43,28 @@ public class BoardController {
         rattr.addFlashAttribute("msg", bno + "등록");
 
         return "redirect:/board/list";
+    }
+
+    // ModelAttribute는 파라미터로 사용하면 넘겨받은 데이터를 결과에 그대로 전달할 목적으로 사용
+    // 모델에 저장하지 않고 넘길 수 있다.
+    @GetMapping({"/board/read", "/board/modify"})
+    public void read(@ModelAttribute("requestDTO") PageRequestDTO pageRequestDTO, Long bno, Model model) {
+        log.info("글 번호: " + bno);
+        BoardDTO dto = boardService.get(bno);
+        model.addAttribute("dto", dto);
+    }
+
+    @PostMapping("/board/modify")
+    public String modify(
+            BoardDTO dto,
+            @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
+            RedirectAttributes redirectAttributes
+    ) {
+        log.info("dto: " + dto.toString());
+        boardService.modify(dto);
+        redirectAttributes.addFlashAttribute("bno", dto.getBno());
+        redirectAttributes.addFlashAttribute("page", requestDTO.getPage());
+
+        return "redirect:/board/read?bno=" + dto.getBno() + "&page=" + requestDTO.getPage();
     }
 }
