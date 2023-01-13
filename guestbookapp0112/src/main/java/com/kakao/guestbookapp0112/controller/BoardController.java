@@ -67,4 +67,17 @@ public class BoardController {
 
         return "redirect:/board/read?bno=" + dto.getBno() + "&page=" + requestDTO.getPage();
     }
+
+    @PostMapping("/board/remove")
+    public String remove(
+            BoardDTO dto,
+            RedirectAttributes redirectAttributes
+    ) {
+        log.info("dto: " + dto.toString());
+
+        // 삭제
+        boardService.removeWithReplies(dto.getBno());
+        redirectAttributes.addFlashAttribute("msg", dto.getBno() + " 삭제");
+        return "redirect:/board/list";
+    }
 }
