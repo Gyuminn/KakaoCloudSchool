@@ -134,4 +134,9 @@ public class RepositoryTest {
             System.out.println(c);
         });
     }
+
+    @Test
+    public void testSearch1() {
+        boardRepository.search1();
+    }
 }
