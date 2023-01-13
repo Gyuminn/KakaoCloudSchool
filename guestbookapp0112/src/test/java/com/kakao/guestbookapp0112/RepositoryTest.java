@@ -153,4 +153,16 @@ public class RepositoryTest {
             System.out.println(Arrays.toString(row));
         }
     }
+
+    // 댓글을 가져오는 메서드 확인
+    @Test
+    public void testListReply() {
+        List<Reply> replyList = replyRepository.findByBoardOrderByRno(
+                Board.builder().bno(27L).build()
+        );
+
+        replyList.forEach(reply -> {
+            System.out.println(reply);
+        });
+    }
 }
