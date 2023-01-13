@@ -7,6 +7,7 @@
         <a th:href="@{/board/register}">
           <button type="button" class="btn btn-primary">게시물 작성</button>
         </a>
+                <div th:if="${msg != null}" th:text="${msg}"></div>
       </span>
         </h1>
         <table class="table table-striped">
@@ -35,7 +36,7 @@
                 <a class="page-link" th:href="@{/board/list(page=${result.startPage - 1})}">이전</a>
             </li>
             <li th:class="'page-item ' + ${result.page== page ? 'active': ''}" th:each="page:${result.pageList}">
-                <a class="page-link" th:href="@${/board/list(page=${page})}">
+                <a class="page-link" th:href="@{/board/list(page=${page})}">
                     [[${page}]]
                 </a>
             </li>
