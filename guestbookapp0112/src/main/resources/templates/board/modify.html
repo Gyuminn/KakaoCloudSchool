@@ -6,7 +6,9 @@
 
         <form action="/board/modify" method="post" id="form">
             <!-- 화면에 보이지는 않지만 form의 데이터를 전송할 때 서버에게 전달은 된다. -->
-            <input type="hidden" name="page" th:value="${requestDTO.page}"/>
+            <input type="hidden" name="page" th:value="${requestDTO.page}" id="page"/>
+            <input type="hidden" name="type" th:value="${requestDTO.type}" id="type"/>
+            <input type="hidden" name="keyword" th:value="${requestDTO.keyword}" id="keyword"/>
             <div class="form-group">
                 <label>Bno</label>
                 <input type="text" class="form-control" name="bno" th:value="${dto.bno}" readonly>
@@ -37,7 +39,7 @@
         <button type="button" class="btn btn-primary" id="modifyBtn">완료</button>
         <button type="button" class="btn btn-warning" id="removeBtn">삭제</button>
 
-        <a th:href="@{/board/list(page=${requestDTO.page} , type=${requestDTO.type})}">
+        <a th:href="@{/board/list(page=${requestDTO.page} , type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
             <button type="button" class="btn btn-info">목록</button>
         </a>
         <script th:inline="javascript">

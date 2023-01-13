@@ -18,7 +18,7 @@ public class PageRequestDTO {
     // 검색 관련 속성
     private String type;
 
-    private String keywords;
+    private String keyword;
 
     // page와 size 값이 없을 떄 사용할 기본값 설정을 위한 생성자
     public PageRequestDTO() {
