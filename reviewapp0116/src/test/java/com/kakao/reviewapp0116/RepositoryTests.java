@@ -11,7 +11,12 @@ import com.kakao.reviewapp0116.persistence.ReviewRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -82,5 +87,15 @@ public class RepositoryTests {
 
             reviewRepository.save(review);
         });
+    }
+
+    @Test
+    // JOIN 연습
+    public void joinTest() {
+        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "mno"));
+        Page<Object[]> result = movieRepository.getList(pageable);
+        for (Object[] objects : result.getContent()) {
+            System.out.println(Arrays.toString(objects));
+        }
     }
 }
