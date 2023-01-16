@@ -37,5 +37,63 @@
         <a th:href="@{/board/list(page=${requestDTO.page} , type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
             <button type="button" class="btn btn-info">목록</button>
         </a>
+
+        <div>
+            <div class="mt-4">
+                <h5 id="replyCount">댓글
+                    <span class="badge">
+                        [[${dto.replyCount}]]
+                    </span>
+                </h5>
+            </div>
+            <div class="list-group replyList" id="replyList"></div>
+        </div>
+        <script th:inline="javascript">
+            window.addEventListener("load", (e) => {
+                // 게시글 번호 찾아오기
+                let bno = [[${dto.bno}]];
+
+                // 댓글이 추가딜 영역
+                let listGroup = document.getElementById("replyList");
+
+                // 날짜 출력 함수
+                let formatTime = (str) => {
+                    let date = new Date(str);
+
+                    return date.getFullYear()
+                        + '/' + (date.getMonth() + 1)
+                        + '/' + date.getDate()
+                        + ' ' + date.getHours()
+                        + ':' + date.getMinutes();
+                }
+
+                // 글번호에 해당하는 데이터를 가져와서 replyList에 출력하는 함수
+                let loadJSONData = () => {
+                    fetch('/replies/board/' + bno).then((response) => response.json())
+                        .then((arr) => {
+                            // 출력할 내요을 저장할 변수
+                            let str = "";
+                            for (const reply of arr) {
+                                str += '<div class="card-body" data-rno="' + reply.rno + '"><b>' + reply.rno + '</b>';
+                                str += '<h5 class="card-title">' + reply.text + '</h5>';
+                                str += '<h5 class="card-title">' + reply.replyer + '</h5>';
+                                str += '<p class="card-text">' + formatTime(reply.regDate) + '</p>';
+                                str += '</div>';
+                            }
+
+                            listGroup.innerHTML = str;
+                        })
+                }
+
+                // 댓글 개수 출력 영역을 클릭하면
+                document.getElementById("replyCount")
+                    .addEventListener('click', (e) => {
+                        // 댓글 출력 함수를 호출
+                        // loadJSONData();
+                    })
+                // 게시글이 출력되자마자 댓글도 출력하고자 하는 경우
+                loadJSONData();
+            })
+        </script>
     </th:block>
 </th:block>
