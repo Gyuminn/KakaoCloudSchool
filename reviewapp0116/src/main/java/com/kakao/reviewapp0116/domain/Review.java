@@ -11,7 +11,7 @@ import lombok.*;
 @ToString(exclude = {"movie", "member"})
 public class Review extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewnum;
 
     @ManyToOne(fetch = FetchType.LAZY)

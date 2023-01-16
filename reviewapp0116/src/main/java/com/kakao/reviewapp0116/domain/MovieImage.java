@@ -18,7 +18,7 @@ import lombok.*;
 @Embeddable
 public class MovieImage {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long inum;
 
     private String uuid; // 파일의 이름이 겹치지 않도록 하기 위해서 추가
