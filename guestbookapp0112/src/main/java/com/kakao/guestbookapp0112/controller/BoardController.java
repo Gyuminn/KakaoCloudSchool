@@ -65,7 +65,7 @@ public class BoardController {
         redirectAttributes.addFlashAttribute("bno", dto.getBno());
         redirectAttributes.addFlashAttribute("page", requestDTO.getPage());
 
-        return "redirect:/board/read?bno=" + dto.getBno() + "&page=" + requestDTO.getPage() + "$type=" + requestDTO.getType() + "$keyword=" + requestDTO.getKeyword();
+        return "redirect:/board/read?bno=" + dto.getBno() + "&page=" + requestDTO.getPage() + "&type=" + requestDTO.getType() + "&keyword=" + requestDTO.getKeyword();
     }
 
     @PostMapping("/board/remove")
