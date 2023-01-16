@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                                <button type="button" class="btn btn-danger ``replyRemove``">
+                                <button type="button" class="btn btn-danger replyRemove">
                             삭제
                         </button>
                         <button type="button" class="btn btn-warning replyModify">
@@ -197,6 +197,31 @@
                         method: 'delete',
                         success: function(result) {
                             alert(result);
+                            modal.modal('hide');
+                            loadJSONData();
+                        }
+                    })
+                })
+
+                // 수정 버튼을 누를 떄 처리
+                $(".replyModify").click(function() {
+                    // rno 가져오기
+                    let rno = $("input[name='rno']").val();
+                    // 수정 요청을 위한 파라미터 만들기
+                    let reply = {
+                        rno: rno,
+                        bno: bno,
+                        text: $('input[name="replyText"]').val(),
+                        replyer: $('input[name="replyer"]').val()
+                    }
+                    // console.log(reply);
+                    $.ajax({
+                        url: '/replies/' + rno,
+                        method: 'put',
+                        data: JSON.stringify(reply),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function(result) {
+                            console.log(result);
                             modal.modal('hide');
                             loadJSONData();
                         }

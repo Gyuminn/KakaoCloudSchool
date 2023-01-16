@@ -41,4 +41,12 @@ public class ReplyController {
         replyService.remove(rno);
         return new ResponseEntity<>(rno + " 삭제", HttpStatus.OK);
     }
+
+    // 댓글 수정 요청 처리
+    @PutMapping("/{rno}")
+    public ResponseEntity<Long> modify(@RequestBody ReplyDTO replyDTO){
+        log.info(replyDTO);
+        Long rno = replyService.modify(replyDTO);
+        return new ResponseEntity<>(rno, HttpStatus.OK);
+    }
 }
