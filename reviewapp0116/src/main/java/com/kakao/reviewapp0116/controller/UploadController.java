@@ -1,7 +1,10 @@
 package com.kakao.reviewapp0116.controller;
 
+import com.kakao.reviewapp0116.dto.UploadResultDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +15,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -34,13 +39,16 @@ public class UploadController {
     }
 
     @PostMapping("/uploadajax")
-    public void uploadFile(MultipartFile[] uploadFiles) {
+    public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles) {
         makeFolder();
+        // 결과를 전달할 객체 생성
+        List<UploadResultDTO> resultDTOList = new ArrayList<>();
+
         for(MultipartFile uploadFile: uploadFiles) {
             // 이미지 파일이 아니면 이미지 업로드 수행하지 않음.
             if(uploadFile.getContentType().startsWith("image") == false) {
                 log.warn("이미지 파일이 아님");
-                return;
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
 
             // 업로드된 파일의 파일 이름
@@ -61,11 +69,13 @@ public class UploadController {
             try {
                 // 파일 업로드
                 uploadFile.transferTo(savePath);
+                // 결과를 List에 추가
+                resultDTOList.add(new UploadResultDTO(fileName, uuid, realUploadPath));
             } catch(IOException e) {
                 System.out.println(e.getLocalizedMessage());
                 e.printStackTrace();
             }
-
         }
+        return new ResponseEntity<>(resultDTOList, HttpStatus.OK);
     }
 }
