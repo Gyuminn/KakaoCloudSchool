@@ -56,14 +56,36 @@
                 console.log(result)
 
                 let divArea = $(".uploadResult");
+                let str = "";
                 for(let i = 0; i<result.length; i++) {
-                    divArea.append("<img src='/display?filename=" + result[i].imageUrl + "'>");
+                    str += "<div>";
+                    str += "<img src='/display?filename=" + result[i].thumbnailUrl + "'>";
+                    str += "<button class='removeBtn' data-name='" + result[i].imageUrl + "'>삭제</button>";
+                    str += "</div>";
                 }
+                divArea.append(str);
             },
             error:function(jqXHR, textstatus, errorThrown) {
                 console.log(textstatus);
             }
         })
+    })
+
+    // 삭제 버튼을 눌렀을 때 처리
+    // 삭제 버튼은 동적으로 생성되었기 때문에 바로 적용이 불가능
+    $('.uploadResult').on('click', ".removeBtn", function(e) {
+        // 이벤트가 발생한 버튼 찾기
+        let target = $(this);
+        // 이벤트가 발생한 버튼의 data-name 속성 찾아오기
+        let fileName = target.data("name");
+        let targetDiv = $(this).closest("div");
+        $.post('/removefile', {fileName: fileName}, function(result) {
+            console.log(result);
+            // 서버로부터의 응답이 true라면 이미지 출력 영역 삭제
+            if(result === true) {
+                targetDiv.remove();
+            }
+        });
     })
 </script>
 </html>

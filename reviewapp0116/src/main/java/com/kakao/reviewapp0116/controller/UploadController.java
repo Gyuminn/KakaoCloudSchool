@@ -2,6 +2,7 @@ package com.kakao.reviewapp0116.controller;
 
 import com.kakao.reviewapp0116.dto.UploadResultDTO;
 import lombok.extern.log4j.Log4j2;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -70,10 +71,17 @@ public class UploadController {
             String uuid = UUID.randomUUID().toString();
             // 실제 파일이 저장될 경로 생성
             String saveName = uploadPath + File.separator + realUploadPath + File.separator + uuid + fileName;
-            Path savePath = Paths.get(saveName);
+            File saveFile = new File(saveName);
             try {
                 // 파일 업로드
-                uploadFile.transferTo(savePath);
+                uploadFile.transferTo(saveFile);
+
+                // 썸네일 파일 이름 생성
+                File thumbnailFile = new File(uploadPath + File.separator + realUploadPath + File.separator + "s_" + uuid + fileName);
+
+                // 썸네일 생성
+                Thumbnailator.createThumbnail(saveFile, thumbnailFile, 100, 100);
+
                 // 결과를 List에 추가
                 resultDTOList.add(new UploadResultDTO(fileName, uuid, realUploadPath));
             } catch (IOException e) {
@@ -101,5 +109,26 @@ public class UploadController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return result;
+    }
+
+    @PostMapping("/removefile")
+    public ResponseEntity<Boolean> removeFile(String fileName) {
+        try {
+            String srcFileName = URLDecoder.decode(fileName, "UTF-8");
+            // 원본 이미지 파일 생성
+            File file = new File(uploadPath + File.separator + srcFileName);
+
+            // 원본 이미지 삭제
+            file.delete();
+
+            // 썸네일 이미지 파일 객체 생성
+            File thumbnail = new File(file.getParent() + "s_" + file.getName());
+            thumbnail.delete();
+
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }catch(Exception e) {
+            System.out.println(e.getLocalizedMessage());
+            return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
