@@ -5,11 +5,27 @@
     <title>파일 업로드 테스트</title>
 </head>
 <body>
-    <input name="uploadFiles" type="file" accept="image/*" multiple="multiple" />
+    <input name="uploadFiles" type="file" id="imginp" accept="image/*" multiple="multiple" />
     <button id="uploadBtn">Upload</button>
+    <img id="img" width="200" height="200" border="1" />
+    <div class="uploadResult"></div>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
+    // 파일을 선택할 때 미리보기
+    let imginp = document.getElementById("imginp");
+    imginp.addEventListener("change", (e) => {
+        if(imginp.files && imginp.files[0]) {
+            let filename = imginp.files[0].name;
+            let reader = new FileReader();
+            reader.addEventListener("load", (e) => {
+                document.getElementById("img").src = e.target.result;
+            });
+            reader.readAsDataURL(imginp.files[0]);
+        }
+    })
+
+    // 파일을 업로드하고 미리보기
     $("#uploadBtn").click(function() {
         let formData = new FormData();
 
@@ -38,6 +54,11 @@
             dataType:'json',
             success:function(result) {
                 console.log(result)
+
+                let divArea = $(".uploadResult");
+                for(let i = 0; i<result.length; i++) {
+                    divArea.append("<img src='/display?filename=" + result[i].imageUrl + "'>");
+                }
             },
             error:function(jqXHR, textstatus, errorThrown) {
                 console.log(textstatus);
