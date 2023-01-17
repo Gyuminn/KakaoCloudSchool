@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -98,4 +99,14 @@ public class RepositoryTests {
             System.out.println(Arrays.toString(objects));
         }
     }
+
+    @Test
+    public void detailTest() {
+        List<Object[]> list = movieRepository.getMovieWithAll(3L);
+        for(Object [] ar: list) {
+            System.out.println(Arrays.toString(ar));
+        }
+    }
+
+
 }
