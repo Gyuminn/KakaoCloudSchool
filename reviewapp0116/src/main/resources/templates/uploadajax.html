@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>파일 업로드 테스트</title>
+</head>
+<body>
+    <input name="uploadFiles" type="file" accept="image/*" multiple="multiple" />
+    <button id="uploadBtn">Upload</button>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $("#uploadBtn").click(function() {
+        let formData = new FormData();
+
+        // 선택된 파일 가져오기
+        let inputFile = $("input[type='file']");
+        let files = inputFile[0].files;
+
+        if(files.length < 1) {
+            alert("선택된 파일이 없습니다.");
+            return;
+        }
+
+        // 선택한 파일을 formData에 추가
+        for(let i = 0; i < files.length; i++) {
+            console.log(files[i]);
+            formData.append("uploadFiles", files[i]);
+        }
+
+        // 서버에 전송
+        $.ajax({
+            url:'/uploadajax',
+            processData: false,
+            contentType: false,
+            data: formData,
+            type:'POST',
+            dataType:'json',
+            success:function(result) {
+                console.log("업로드 성공")
+            },
+            error:function(jqXHR, textstatus, errorThrown) {
+                console.log(textstatus);
+            }
+        })
+    })
+</script>
+</html>
