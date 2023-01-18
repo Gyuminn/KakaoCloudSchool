@@ -164,6 +164,28 @@
                     })
                     reviewModal.modal('hide');
                 });
+
+                // 리뷰를 출력하는 함수
+                let getMovieReviews = () => {
+                    let formatTime = (str) => {
+                        let date = new Date(str);
+                        return date.getFullYear() + '/' +
+                            (date.getMonth() + 1) + '/' +
+                            date.getDate() + ' ' +
+                            date.getHours() + ":" +
+                            date.getMinutes();
+                    }
+
+                    $.getJSON("/reviews/" + mno + "/list", function(ar) {
+                        ar.sort((o1, o2) => {
+                            if (formatTime(o1.modDate) < formatTime(o2.modDate)) return 1;
+                            if (formatTime(o1.modDate) === formatTime(o2.modDate)) return 0;
+                            if (formatTime(o1.modDate) > formatTime(o2.modDate)) return -1;
+                        })
+                        console.log(ar);
+                    })
+                }
+                getMovieReviews();
             })
         </script>
     </th:block>
