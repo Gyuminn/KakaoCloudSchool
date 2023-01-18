@@ -22,6 +22,9 @@ public interface MovieService {
     // 데이터 목록을 위한 메서드
     PageResponseDTO<MovieDTO, Object[]> getList(PageRequestDTO requestDTO);
 
+    // 상세보기를 위한 메서드
+    MovieDTO getMovie(Long mno);
+
     // DTO를 Entity로 변환
     // 하나의 Entity가 아니라 Movie와 MovieImage로 변환이 되어야 해서
     // Map으로 리턴

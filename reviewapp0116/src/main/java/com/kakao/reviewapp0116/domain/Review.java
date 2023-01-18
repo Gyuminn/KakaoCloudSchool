@@ -23,4 +23,5 @@ public class Review extends BaseEntity {
     private int grade;
 
     private String text;
+
 }

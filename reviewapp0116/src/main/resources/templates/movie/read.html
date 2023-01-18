@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <h1 class="mt-4">영화 정보</h1>
+        <div class="form-group">
+            <label>제목</label>
+            <input type="text" class="form-control" name="title" th:value="${dto.title}" readonly="readonly"/>
+        </div>
+        <div class="form-group">
+            <label>리뷰 개수</label>
+            <input type="text" class="form-control" name="title" th:value="${dto.reviewCnt}" readonly="readonly"/>
+        </div>
+        <div class="form-group">
+            <label>평점</label>
+            <input type="text" class="form-control" name="title" th:value="${dto.avg}" readonly="readonly"/>
+        </div>
+        <div class="uploadResult">
+            <ul>
+                <li th:each="movieImage:${dto.imageDTOList}">
+                    <img th:if="${movieImage.path != null}"
+                         th:src="|/display?filename=${movieImage.getThumbnailUrl()}|">
+                </li>
+            </ul>
+        </div>
+        <style>
+            .uploadResult {
+                width: 100%;
+                background-color: gray;
+                margin-top: 10px;
+            }
+
+            .uploadResult ul {
+                display: flex;
+                flex-flow: row;
+                justify-content: center;
+                vertical-align: top;
+            }
+
+            .uploadResult ul li {
+                list-style: none;
+                padding: 10px;
+                margin-left: 2em;
+            }
+
+            .uploadResult ul li img {
+                width: 100px;
+            }
+        </style>
+    </th:block>
+</th:block>
