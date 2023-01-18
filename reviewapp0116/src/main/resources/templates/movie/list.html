@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <h1 class="mt-4">영화 목록</h1>
+        <span>
+            <a th:href="@{movie/register}">
+                <button type="button" class="btn btn-primary">영화 등록</button>
+            </a>
+        </span>
+        <br/>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>영화번호</th>
+                <th>영화제목</th>
+                <th>평점</th>
+                <th>등록</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="dto:${result.dtoList}">
+                <td>
+                    [[${dto.mno}]]
+                </td>
+                <td>
+                    <img th:if="${dto.imageDTOList.size()>0 && dto.imageDTOList[0].path != null}"
+                         th:src="|/display?filename=${dto.imageDTOList[0].thumbnailUrl}|">
+                    [[${dto.title}]]
+                </td>
+                <td>[[${dto.avg}]]</td>
+                <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+</th:block>

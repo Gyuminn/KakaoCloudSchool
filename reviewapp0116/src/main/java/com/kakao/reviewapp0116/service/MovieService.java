@@ -4,6 +4,8 @@ import com.kakao.reviewapp0116.domain.Movie;
 import com.kakao.reviewapp0116.domain.MovieImage;
 import com.kakao.reviewapp0116.dto.MovieDTO;
 import com.kakao.reviewapp0116.dto.MovieImageDTO;
+import com.kakao.reviewapp0116.dto.PageRequestDTO;
+import com.kakao.reviewapp0116.dto.PageResponseDTO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +18,9 @@ public interface MovieService {
     // 리턴 타입과 이름 기재
     // 리턴타입은 기본 키를 주던지 DTO를 그대로 주던지 한다.
     Long register(MovieDTO movieDTO);
+
+    // 데이터 목록을 위한 메서드
+    PageResponseDTO<MovieDTO, Object[]> getList(PageRequestDTO requestDTO);
 
     // DTO를 Entity로 변환
     // 하나의 Entity가 아니라 Movie와 MovieImage로 변환이 되어야 해서
@@ -46,5 +51,28 @@ public interface MovieService {
             entityMap.put("imgList", movieImageList);
         }
         return entityMap;
+    }
+
+    // 검색 결과를 DTO로 변환해주는 메서드
+    default MovieDTO entitiesToDTO(Movie movie, List<MovieImage> movieImages, double avg, Long reviewCnt) {
+        MovieDTO movieDTO = MovieDTO.builder()
+                .mno(movie.getMno())
+                .title(movie.getTitle())
+                .regDate(movie.getRegDate())
+                .modDate(movie.getModDate())
+                .build();
+        List<MovieImageDTO> movieImageDTOList = movieImages.stream().map(movieImage -> {
+            return MovieImageDTO.builder()
+                    .imgName(movieImage.getImgName())
+                    .path(movieImage.getPath())
+                    .uuid(movieImage.getUuid())
+                    .build();
+        }).collect(Collectors.toList());
+
+        movieDTO.setImageDTOList(movieImageDTOList);
+        movieDTO.setAvg(avg);
+        movieDTO.setReviewCnt(reviewCnt);
+
+        return movieDTO;
     }
 }

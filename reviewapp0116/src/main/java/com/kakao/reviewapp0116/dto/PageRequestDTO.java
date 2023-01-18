@@ -27,6 +27,6 @@ public class PageRequestDTO {
 
     // page와 size를 가지고 Pageable 객체를 생성해주는 메서드
     public Pageable getPageable(Sort sort) {
-        return PageRequest.of(-1, size, sort);
+        return PageRequest.of(page -1, size, sort);
     }
 }
