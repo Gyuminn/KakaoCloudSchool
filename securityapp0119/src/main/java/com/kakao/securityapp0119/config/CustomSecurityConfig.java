@@ -21,7 +21,7 @@ public class CustomSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         log.info("필터 환경 설정");
         // 인증이나 인가에 문제가 발생하면 로그인 폼 출력
-        http.formLogin();
+        http.formLogin().loginPage("/member/login");
         return http.build();
     }
 
