@@ -15,11 +15,8 @@ public class MemberController {
     // error는 로그인 실패했을 때의 파라미터
     // logout은 로그아웃한 후 로그인으로 이동했을 때의 파라미터
     public void login(String error, String logout) {
-        if(error != null) {
-
-        }
-        if(logout != null) {
-
+        if (logout != null) {
+            log.info("로그아웃");
         }
     }
 }
