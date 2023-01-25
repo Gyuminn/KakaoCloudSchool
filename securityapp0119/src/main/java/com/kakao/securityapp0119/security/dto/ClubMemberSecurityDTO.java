@@ -5,14 +5,16 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
+import java.util.Map;
 
 
 @Getter
 @Setter
 @ToString
-public class ClubMemberSecurityDTO extends User {
+public class ClubMemberSecurityDTO extends User implements OAuth2User {
     private String mid;
     private String mpw;
     private String email;
@@ -30,5 +32,18 @@ public class ClubMemberSecurityDTO extends User {
         this.name = name;
         this.del = del;
         this.social = social;
+    }
+
+    // 소셜 로그인을 위한 코드
+    private Map<String, Object> props;
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return this.getProps();
+    }
+
+    @Override
+    public String getName() {
+        return this.mid;
     }
 }
