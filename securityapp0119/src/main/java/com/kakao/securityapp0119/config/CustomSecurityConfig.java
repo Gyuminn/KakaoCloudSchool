@@ -1,6 +1,7 @@
 package com.kakao.securityapp0119.config;
 
 import com.kakao.securityapp0119.security.CustomUserDetailService;
+import com.kakao.securityapp0119.security.handler.Custom403Handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -33,6 +35,11 @@ public class CustomSecurityConfig {
     }
 
     @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new Custom403Handler();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         log.info("필터 환경 설정");
         // 인증이나 인가에 문제가 발생하면 로그인 폼 출력
@@ -44,6 +51,8 @@ public class CustomSecurityConfig {
                 .tokenRepository(persistentTokenRepository())
                 .userDetailsService(userDetailService)
                 .tokenValiditySeconds(60 * 60 * 24 * 30);
+
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
 
         return http.build();
     }
