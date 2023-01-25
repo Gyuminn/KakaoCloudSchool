@@ -44,6 +44,7 @@ public class CustomSecurityConfig {
         log.info("필터 환경 설정");
         // 인증이나 인가에 문제가 발생하면 로그인 폼 출력
         http.formLogin().loginPage("/member/login");
+        http.oauth2Login().loginPage("/member/login");
         http.csrf().disable();
 
         http.rememberMe()
