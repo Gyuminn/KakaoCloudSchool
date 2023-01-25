@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-  회원만 볼 수 있는 페이지
+<div sec:authorize="hasRole('USER')">유저 권한</div>
+<div sec:authorize="hasRole('MANAGER')">관리자 권한</div>
+<div sec:authorize="isAuthenticated">로그인된 경우만 출력</div>
+사용자이름
+<div sec:authentication="name"></div>
 </body>
 <script>
     const auth = [[${#authentication.principal}]];

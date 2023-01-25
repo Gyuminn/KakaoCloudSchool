@@ -1,10 +1,14 @@
 package com.kakao.securityapp0119.controller;
 
+import com.kakao.securityapp0119.dto.ClubMemberJoinDTO;
+import com.kakao.securityapp0119.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Log4j2
@@ -18,5 +22,29 @@ public class MemberController {
         if (logout != null) {
             log.info("로그아웃");
         }
+    }
+
+    private final MemberService memberService;
+
+    // 회원 가입 페이지로 이동
+    @GetMapping("/join")
+    public void join() {
+        log.info("회원 가입 페이지로 이동");
+    }
+
+    // 회원 가입 처리
+    @PostMapping("/join")
+    public String join(ClubMemberJoinDTO memberJoinDTO, RedirectAttributes rattr) {
+        log.info(memberJoinDTO);
+
+        try {
+            memberService.join(memberJoinDTO);
+            // 성공
+        } catch (Exception e) {
+            rattr.addFlashAttribute("error", "mid");
+            return "redirect:/member/join";
+        }
+        rattr.addFlashAttribute("result", "success");
+        return "redirect:/member/login";
     }
 }
