@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -51,5 +52,11 @@ public class RepositoryTests {
         } else {
             System.out.println("존재하지 않는 아이디");
         }
+    }
+
+    @Test
+    public void testReadEmail() {
+        Optional<ClubMember> clubMember = clubMemberRepository.findByEmail("user95@email.com");
+        System.out.println(clubMember.get().getRoleSet());
     }
 }
