@@ -697,3 +697,264 @@
    4. 도커 허브에 업로드
 
       `docker push 태그`
+
+10. **Docker Compose**
+
+    1. Docker Compose
+       - 시스템 구축과 관련된 명령어를 하나의 텍스트 파일에 기재해서 명령어 한번으로 시스템 전체를 실행하고 종료와 폐기까지는 한 번 할 수 있도록 도와주는 도구
+       - YAML 포맷으로 기재된 정의 파일을 이용해서 시스템을 일괄 실행 또는 일괄 종료 및 삭제할 수 있는 도구
+       - 작성된 명령어는 도커 명령어와 유사하지만 도커 명령어는 아님.
+    2. Dockerfile과 차이
+       - Dockerfile
+         이미지를 만들기 위한 스크립트
+       - Docker Compose
+         Docker run 명령어를 여러 개 모아놓은 것과 유사하고 컨테이너와 주변 환경을 생성할 수 있음(네트워크나 볼륨까지 생성가능)
+    3. Kubernetes와의 차이
+       - 쿠버네티스는 도커 컨테이너를 관리하는 도구로 여러 개의 컨테이너를 다루는 것과 관계가 깊음.
+       - Docker Compose에는 컨테이너를 관리하는 기능은 없음.
+    4. 사용하기 전 준비 사항: 도커 컴포즈 설치
+       - 도커 데스크탑을 사용하는 경우는 별도의 설치 과정이 필요 없음.
+       - 리눅스에서는 Python3 Runtime이 필요
+         `sudo apt install -y python3 python3-pip`
+         python3의 runtime과 pip 설치
+         `sudo pip3 install docker-compose`
+         docker compose 설치
+    5. 사용법
+       - docker compose가 사용할 디렉토리를 생성
+       - 정의 파일을 디렉토리에 작성 - 하나의 디렉토리에 정의 파일은 1개만 존재.
+         정의 내에서 사용될 파일들도 모두 동일한 디렉토리에 배치
+    6. 작성법
+
+       ```yaml
+       version: "버전 - 3"
+       services:
+       	컨테이너이름:
+       		image: 사용할 이미지 이름
+       		ports:
+       			- 포트포워딩
+       		restart: always
+       ```
+
+       - `docker run --name apa000ex2 -d -p 8080:80 httpd`
+         이 명령어의 뜻은 httpd:latest 버전의 이미지로 apa000ex2라는 컨테이너를 생성하는데 백그라운드에서 실행되고 호스트 컴퓨터에서는 8080 포트를 이용해서 80번 포트로 접속하도록 생성. 백그라운드 실행이라는 거은 어떤 요청이 왔을 때 실행을 의미.(준비 상태에 있다.)
+         ```yaml
+         version: "3"
+         services:
+         	apa000ex2:
+         		image: httpd
+         		ports:
+         			- 8080:80
+         		restart: always
+         ```
+       - `docker run --name wordpress000ex12 -dit --net=wordpress000net1 -p 8085:80 -e WORDPRESS_DB_HOST=mysql000ex11 -e WORDPRESS_DB_NAME=wordpress000db -e WORDPRESS_DB_USER=wordpress000kun -e WORDPRESS_DB_PASSWORD=wkunpass wordpress`
+         ```yaml
+         version: "3"
+         services:
+         	wordpress000ex12:
+         		image: wordpress
+         		ports:
+         			- 8085:80
+         		networks:
+         			- wordpress000net1
+         		depends_on:
+         			- mysql000ex11
+         		restart: always
+         		environment:
+         			WORDPRESS_DB_HOST=mysql000ex11
+         			WORDPRESS_DB_NAME=wordpress000db
+         			WORDPRESS_DB_USER=wordpress000kun
+         			WORDPRESS_DB_PASSWORD=wkunpass
+         ```
+       - 작성 요령
+         - 기본적인 파일 이름은 docker-compose.yml 인데 실행할 때 -f 옵션을 이용하면 다른 이름도 가능
+         - 작성은 맨 앞에 compose 버전을 설정한 후 services, networks, volumes를 기재
+           docker-compose와 kubernetes에서는 컨테이너의 집합을 service라는 용어로 부름.
+         - 작성을 할 때는 `주항목 → 이름 추가 → 설정` 과 같은 순서로 작성
+           각 이름들은 주항목보다 한단 들여쓰기를 해야 하는데 공백 개수는 몇 개이던지 상관없지만 한 번 한 단을 공백 한 개로 정하면 그 뒤로는 계속 같은 공백을 사용해야 한다.
+           원칙적으로는 탭은 안되는데 대부분의 editor가 탭을 4ㅐ 정도의 공백으로 설정해놓은 상태라서 사용 가능.
+         - 설정을 작성할 때 앞에 하나의 공백을 추가해야 한다.
+         - 하나의 설정인 경우는 바로 작성하면 되지만 여러 개의 설정을 하는 경우는 앞에 -를 추가해야 한다.
+
+    7. 컴포즈 파일의 항목
+       - 주 항목
+         - services
+           컨테이너(독립된 프로그램과 데이터)
+         - networks
+         - volumes
+           호스트 컴퓨터나 도커 엔진의 영역과 내부 영역을 매핑시키고자 할 때 사용
+       - 자주 사용하는 정의 내용
+         - image
+           사용할 이미지를 설정
+         - networks
+           --net
+         - volumes
+           -v, --mount
+         - ports
+           -p
+         - environment
+           -e
+         - depends_on
+           다른 서비스에 대한 의존 관계, 컨테이너를 생성하는 순서나 연동 여부를 정의
+         - restart
+           no(재시작하지 않음), always(항상 재시작), on-failure(프로세스가 0 외의 상태로 종료되었다면 재시작), unless-stopped(종료의 경우는 재시작하지 않고 그 외의 경우는 재시작)
+         - logging
+           --log-driver에 해당하는 것으로 로그 출력 대상을 설정
+    8. 컴포즈 파일 작성
+
+       - 생성할 네트워크, 볼륨, 컨테이너 정보
+         - 네트워크 이름
+           wordpress000net1
+         - MySQL 볼륨
+           mysql000vol11
+         - 워드프레스 볼륨
+           wordpress000vol12
+         - MySQL 컨테이너
+           mysl000ex11
+         - 워드프레스 컨테이너
+           wordpress000ex12
+       - MySQL 컨테이너
+         - 이미지
+           mysql:5.7
+         - 네트워크
+           wordpress000net1
+         - 사용할 볼륨
+           mysql000vol11
+         - 마운트위치
+           /var/lib/mysql(mysql의 데이터 디렉토리)
+         - 재시작 설정
+           always
+         - 환경 변수
+           루트 패스워드(MYSQL_ROOT_PASSWORD) - myrootpass
+           사용할 데이터베이스이름(MYSQL_DATABASE) - wordpress000db
+           사용자이름(MYSQL_USER) - wordpress000kun
+           사용자비밀번호(MYSQL_PASSWORD) - wkunpass
+       - wordpress 컨테이너
+         - 의존 관계 - mysql000ex11
+         - 이미지 - wordpress
+         - 네트워크 - mysql000vol11
+         - 마운트위치 - /var/www/html(html 파일의 경로)
+           **데이터베이스 프로그램을 docker를 이용해서 사용하고자 할 때는 데이터 디렉토리를 확인해서 볼륨이나 외부 스토리지에 마운트를 하고 사용하는 것을 권장한다.**
+         - 포트설정 - 8085:80
+         - 환경 변수
+           데이터베이스 컨테이너이름(WORDPRESS_DB_HOST) - mysql000ex11
+           데이터베이스 이름(WORDPRESS_DB_NAME) - wordpress000db
+           데이터베이스 사용자 이름(WORDPRESS_DB_USER) - wordpress000kun
+           데이터베이스 비밀번호(WORDPRESS_DB_PASSWORD) - wkunpass
+       - 디렉토리 생성 - com_folder
+       - 디렉토리에 docker_compose.yml
+
+         ```yaml
+         version: "3"
+
+         services:
+           mysql000ex11:
+             image: mysql:5.7
+             networks:
+               - wordpress000net1
+             volumes:
+               - mysql000vol11:/var/lib/mysql
+             restart: always
+             environment:
+               MYSQL_ROOT_PASSWORD: myrootpass
+               MYSQL_DATABASE: wordpress000db
+               MYSQL_USER: wordpress000kun
+               MYSQL_PASSWORD: wkunpass
+           wordpress000ex12:
+             depends_on:
+               - mysql000ex11
+             image: wordpress
+             networks:
+               - wordpress000net1
+             volumes:
+               - wordpress000vol12:/var/www/html
+             ports: 8085:80
+             restart: always
+             environment:
+               WORDPRESS_DB_HOST: mysql000ex11
+               WORDPRESS_DB_NAME: wordpress000db
+               WORDPRESS_DB_USER: wordpress000kun
+               WORDPRESS_DB_PASSWORD: wkunpass
+
+         networks:
+           wordpress000net1:
+         volumes:
+           mysql000vol11:
+           wordpress000vol12:
+         ```
+
+       - MySQL 8.0을 사용하고자 하는 경우
+         데이터베이스에 접속해서 사용자 패스워드 설정을 변경해주거나 mysql 8.0 컨테이너를 생성할 때 아래 커맨드를 추가
+         공백 4개 추가하고 `command: mysqld --character-set-server=utf8mb4 --collation-server==utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password`
+
+    9. 컴포즈 관련 명령어
+       - docker compose 명령
+       - 명령은 up, down, stop
+         - up은 컴포즈 파일에 정의된 컨테이너 및 네트워크를 생성
+         - down은 컨테이너와 네트워크를 종료하고 삭제
+         - stop은 컨테이너와 네트워크를 종료
+       - `docker-compose -f 야믈파일의경로 up 옵션`
+         옵션종류
+         - -d
+           백그라운드 실행
+         - --no-color
+           화면 출력 내용을 흑백으로 출력
+         - --no-deps
+           링크된 서비스를 실행하지 않음.
+         - --force-recreate
+           설정 또는 이미지가 변경되지 않더라도 컨테이너를 재생성
+         - --no-create
+           컨테이너가 이미 존재하는 경우 재생성하지 않음.
+         - --no-build
+           이미지가 없어도 이미지를 빌드하지 않음.
+         - --build
+           컨테이너를 실행하기 전에 이미지를 빌드
+         - --abort-on-container-exit
+           컨테이너가 하나로도 종료되면 모든 컨테이너를 종료
+         - -t, -timeout
+           컨테이너를 종료할 때 타임아웃 옵션으로 기본은 10초
+         - --remove-orphans
+           컴포즈 파일에 정의되지 않은 서비스의 컨테이너를 삭제
+         - --scale
+           컨테이너의 수 변경
+       - `docker-compose -f 파일경로 down 옵션`
+         옵션종류
+         - --rmi
+           삭제할 때 이미지도 같이 삭제하는데 all로 설정하면 모든 이미지가 삭제되고 local로 지정하면 태그가 없는 이미지만 삭제
+         - -v, --volumes
+           기재된 볼륨을 삭제. 잘 안씀. 볼륨을 만든 이유가 데이터를 남기려고 한 것이기 때문.
+         - --remove-orphans
+           컴포즈 파일에 정의되지 않은 서비스의 컨테이너도 삭제. 이것도 잘 안씀.
+       - `docker-compose -f 파일경로 stop 옵션`
+         컨테이너를 중지하고 삭제하지는 않음.
+       - 그 외의 명령
+         - ps - 컨테이너 목록 출력
+         - config - 컴포즈 파일을 확인하고 내용을 출력
+         - port - 포트 설정 내용을 출력
+         - logs - 컨테이너가 출력한 내용을 화면에 출력
+         - start - 컨테이너 시작
+         - kill - 컨테이너 강제 종료
+         - exec - 명령어를 실행
+         - run - 컨테이너 실행
+         - create - 컨테이너 생성
+         - restart - 컨테이너 재시작
+         - pause - 컨테이너 일시 중지
+         - unpause - 컨테이너 일지 중지 해제
+         - rm - 종료된 컨테이너 삭제
+         - build - 컨테이너에 사용되는 이미지를 빌드 또는 재빌드
+         - pull - 이미지 다운로드
+         - scale - 컨테이너 수를 지정(동일한 이미지를 사용하는 여러 개 컨테이너 생성)
+         - events - 컨테이너로부터 실시간으로 이벤트를 수신
+         - help - 도움말
+    10. 실습
+        - 컴포즈 내용을 이용해서 생성
+          `docker compose -f /Users/gimgyumin/Desktop/com_folder/docker_compose.yml up -d`
+        - 컨테이너 생성 여부 확인
+          `docker ps`
+        - 브라우저 확인
+          localhost:8085
+        - 종료 및 삭제
+          `docker compose -f /Users/gimgyumin/Desktop/com_folder/docker_compose.yml down`
+        - 컨테이너 삭제 여부 확인
+          `docker ps -a`
+          `docker volume list`
+          `docker volume rm 볼륨이름`
