@@ -5,6 +5,19 @@
     <title>WebSocket</title>
 </head>
 <body>
+    <a href="#" id="push">웹 푸시 시작</a>
+    푸시 내용:<div id="disp"></div>
+    <a href="textmail">문자 메일 보내기</a>
+    <script>
+        window.addEventListener('load', (e) => {
+            document.getElementById("push").addEventListener("click", (e) => {
+                let eventSource = new EventSource("push");
+                eventSource.onmessage = function(event) {
+                    document.getElementById("disp").innerHTML = event.data;
+                }
+            })
+        })
+    </script>
     <div id="chat">
         <h1>Web Chatting</h1>
         <input type="text" id="mid" value="noname" />
