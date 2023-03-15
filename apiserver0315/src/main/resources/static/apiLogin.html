@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>토큰 요청</title>
+</head>
+<body>
+  <button id="btn1">토큰 발급 요청</button>
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  document.getElementById("btn1").addEventListener('click', (e) => {
+    //전송할 데이터
+    const data = {mid:"apiuser10", mpw:"1111"};
+    axios.post("http://localhost/generateToken", data)
+        .then(res => {
+            const accessToken = res.data.accessToken;
+            const refreshToken = res.data.refreshToken;
+
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("refreshToken", refreshToken);
+        })
+  })
+</script>
+</html>
