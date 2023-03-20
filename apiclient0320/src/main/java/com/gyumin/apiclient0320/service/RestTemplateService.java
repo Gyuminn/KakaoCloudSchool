@@ -1,6 +1,7 @@
 package com.gyumin.apiclient0320.service;
 
 import com.gyumin.apiclient0320.dto.MemberDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @Service
+@RequiredArgsConstructor
 public class RestTemplateService {
+    private final RestTemplate restTemplate;
+
     // 파라미터가 없는 GET 방식 요청 처리 - 응답 타입은 String
     public String getName() {
         // 요청 URI 생성
@@ -21,8 +25,6 @@ public class RestTemplateService {
                 .build()
                 .toUri();
 
-        // 요청 객체 생성
-        RestTemplate restTemplate = new RestTemplate();
         // 요청을 전송하고 응답 객체의 본문을 String으로 변환해서 받기
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(uri, String.class);
 
@@ -42,8 +44,6 @@ public class RestTemplateService {
                 .toUri();
         // PathVariable이 여러 개라면 expand에 나열하면 된다.
 
-        // 요청 객체 생성
-        RestTemplate restTemplate = new RestTemplate();
         // 요청을 전송하고 응답 객체의 본문을 String으로 변환해서 받기
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(uri, String.class);
 
@@ -64,8 +64,6 @@ public class RestTemplateService {
         // 다른 모양의 queryParam을 이용
         // 요청 객체 생성
 
-        // 요청 객체 생성
-        RestTemplate restTemplate = new RestTemplate();
         // 요청을 전송하고 응답 객체의 본문을 String으로 변환해서 받기
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(uri, String.class);
 
@@ -92,7 +90,6 @@ public class RestTemplateService {
         memberDTO.setName("gyumin");
         memberDTO.setEmail("abc@kakao.com");
         memberDTO.setOrganization("카카오");
-        RestTemplate restTemplate = new RestTemplate();
 
         // POST 방식으로 전송할 때 2번쨰 매개변수로 Body를 설정
         ResponseEntity<MemberDTO> responseEntity = restTemplate.postForEntity(uri, memberDTO, MemberDTO.class);
@@ -122,7 +119,6 @@ public class RestTemplateService {
                 .header("my-header", "gyumin-API")
                 .body(memberDTO);
 
-        RestTemplate restTemplate = new RestTemplate();
 
         // POST 방식으로 전송할 때 요청 객체를 전송
         ResponseEntity<MemberDTO> responseEntity = restTemplate.exchange(requestEntity, MemberDTO.class);
