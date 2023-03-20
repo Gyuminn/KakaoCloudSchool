@@ -8,7 +8,8 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
-@Configuration
+// PoolingRestTemplateConfig에서도 RestTemplate을 만들어줬으므로 2개가 된다. 그래서 Configuration을 주석처리
+// @Configuration
 public class RestTemplateConfig {
     // 팩토리 클래스의 bean 설정
     @Bean
