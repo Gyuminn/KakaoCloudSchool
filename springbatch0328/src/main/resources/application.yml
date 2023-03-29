@@ -7,8 +7,8 @@ spring:
       initialize-schema: always
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/gyumin?serverTimezone=Asia/Seoul
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/gyumin
     username: root
     password: root
 
