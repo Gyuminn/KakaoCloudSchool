@@ -1,7 +1,7 @@
-package service;
+package com.gyumin.springtest0330.service;
 
-import dto.HotelRequestDTO;
-import dto.HotelResponseDTO;
+import com.gyumin.springtest0330.dto.HotelRequestDTO;
+import com.gyumin.springtest0330.dto.HotelResponseDTO;
 
 import java.util.List;
 

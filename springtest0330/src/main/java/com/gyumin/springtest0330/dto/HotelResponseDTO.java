@@ -1,4 +1,4 @@
-package dto;
+package com.gyumin.springtest0330.dto;
 
 import lombok.Getter;
 import lombok.ToString;

@@ -1,7 +1,7 @@
-package service;
+package com.gyumin.springtest0330.service;
 
-import dto.HotelRequestDTO;
-import dto.HotelResponseDTO;
+import com.gyumin.springtest0330.dto.HotelRequestDTO;
+import com.gyumin.springtest0330.dto.HotelResponseDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
